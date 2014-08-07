@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-// ================= inicializace =================
+// ================= initialization =================
 
-require_once $rootDir . 'libs/bootstrap.php';
+require_once $rootDir . '../vendor/autoload.php';
 require_once $rootDir . 'core/config.php';
 
 if ($config['debug']) {
 	$kint = 'C:/xampp/htdocs/_pomocne/_kint.php';
 	if (file_exists($kint)) {
-		@require_once $kint;
+		require_once $kint;
 	}
 }
 
@@ -28,7 +28,7 @@ $Session = new FundSession();
 
 $FundControl = new FundControl($config['homeUrl'], $rootDir, $Db, $Session);
 
-// ================= zpracování =================
+// ================= process requests =================
 
 if (isset($_POST['save'])) {
 	$FundControl
@@ -49,7 +49,7 @@ if (isset($_POST['save'])) {
 	$Setup->install();
 
 	$FundControl
-		->flashSuccess('Nainstalováno')
+		->flashSuccess('Installed')
 		->reload();
 } elseif (isset($_GET['info']) && $_GET['info'] == 'afej8183fakkjfa') {
 	/*

@@ -32,8 +32,5 @@ class Setup {
 			PRIMARY KEY (`id`),
 			UNIQUE KEY `login` (`login`)
 		  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8");
-
-		$this->Db->query("INSERT IGNORE INTO `" . self::PREFIX . "users` (`id`, `login`, `password`) VALUES
-			(1, 'mortal_flesh', 'MFHWBqqDw.Zwo')");
 	}
 }

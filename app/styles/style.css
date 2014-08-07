@@ -1,14 +1,8 @@
-body {
-	font-family: arial;
-	font-size: 12px;
-}
-
 #flash-container {
 }
 	#flash-container .flash {
 		padding: 12px 35px;
 		line-height: 18px;
-		margin: 8px 0 16px 0;
 		color: #423C56;
 	}
 	#flash-container .flash.success {
@@ -46,21 +40,9 @@ body {
 	}
 
 #add-item {
-	padding: 10px;
-	border: 1px solid #333;
-	border-radius: 10px;
 }
 
 #user-panel {
-	margin: 20px 0;
 }
 	#user-panel .logout {
-		
 	}
-
-.clear {
-	clear: both;
-}
-.hidden {
-	display: none;
-}

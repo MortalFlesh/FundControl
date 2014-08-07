@@ -40,8 +40,7 @@ app.controller('MainController', function($rootScope, $scope/*, test*/) {
 
 	$scope.scrollItems = scrollItems;
 
-	$scope.login = function() {
-		console.log('login...');
-		// todo: https://docs.angularjs.org/api/ng/directive/ngSubmit
-	}
+	$scope.logout = function() {
+		window.location.href = '?logout';
+	};
 });

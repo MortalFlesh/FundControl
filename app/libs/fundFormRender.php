@@ -168,10 +168,11 @@ class FundFormRender {
 		?>
 		<div bs-panel class="form-actions">
 			<div content-for="navbarAction" duplicate>
-				<button class="btn btn-primary" name="<?=$name?>" ng-click="<?=$action?>"><?=$title?></button>
-				<?
-				//$this->renderInput('submit', $name, $title, array('class="btn btn-primary"', 'ng-click="' . $action . '"'));
-				?>
+				<button type="submit"
+					class="btn btn-primary"
+					name="<?=$name?>"
+					<?=(empty($action) ? '' : 'ng-click="' . $action . '"')?>
+				><?=$title?></button>
 			</div>
 		</div>
 		<?
