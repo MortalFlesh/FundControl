@@ -9,3 +9,5 @@ require_once $dir . 'arrayFunctions.php';
 require_once $dir . 'item.php';
 require_once $dir . 'fundFormRender.php';
 require_once $dir . 'setup.php';
+require_once $dir . 'fundSession.php';
+require_once $dir . 'flashMessage.php';

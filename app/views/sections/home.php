@@ -9,7 +9,7 @@ require_once $rootDir . 'core/fundControlApp.php';
 		<div class="list-group">
 			<div class="list-group-item">
 				<h1>Welcome<br/>
-					<small>This is <?=$FundControl->getTitle() ?></small>
+					<small>This is <?=$FundControl->getTitle()?></small>
 				</h1>
 			</div>
 

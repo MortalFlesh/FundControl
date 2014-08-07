@@ -10,7 +10,7 @@ $Render = new FundFormRender();
 			$Render
 				->renderTextModel('Login.login', 'Login', 'login')
 				->renderPasswordModel('Login.password', 'Password', 'password')
-				->renderSubmitModel('Submit', 'authorize', 'login()');
+				->renderSubmitModel('Submit', 'authorize', '');
 			?>
 		</div>
 	</form>

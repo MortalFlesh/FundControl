@@ -21,9 +21,7 @@ require_once $rootDir . 'core/fundControlApp.php';
 		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-base.min.css" />
 		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-desktop.min.css" />
 		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/app.css" />
-		<!--
-		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/style.css" /> ?>
-		-->
+		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/style.css" />
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>

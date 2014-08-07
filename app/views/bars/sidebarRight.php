@@ -7,7 +7,8 @@ require_once $rootDir . 'core/fundControlApp.php';
   <div class="scrollable-content">
     <div class="list-group" toggle="off" bubble target="rightSidebar">
 
-
+<?
+/*
     <a class="list-group-item media" href="" ng-repeat="user in chatUsers">
       <div class="pull-left">
         <i class="fa fa-user chat-user-avatar"></i>
@@ -25,8 +26,8 @@ require_once $rootDir . 'core/fundControlApp.php';
       </div>
     </a>
 
-
-
+//*/
+?>
 
     </div>
   </div>

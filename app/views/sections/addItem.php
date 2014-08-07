@@ -16,24 +16,23 @@ $Render = new FundFormRender();
 
 			<div bs-panel title="Invoice">
 				<?
-
 				$Render
-					//->renderTextModel('invoice.customer', 'Customer', 'customer', 'Customer Name')
-					//*/
-					->renderTextFieldset('Název', 'name')
-					->renderSelectFieldset('Typ', 'type', $FundControl->getItemTypes(), array('id="types-select"'))
-					->renderCustom(function(){
-						?>
-						<fieldset class="input-for" id="new-type-container" style="display:none;">
-							<legend class="input-for-title">Nový typ</legend>
-							<input type="text" name="new_type" value="" disabled="disabled" />
-						</fieldset>
-						<?
-					})
-					->renderNumberFieldset('Hodnota', 'value')
-					->renderSubmitFieldset('Přidat', 'save')
-					//*/
-					;
+						//->renderTextModel('invoice.customer', 'Customer', 'customer', 'Customer Name')
+						//*/
+						->renderTextFieldset('Name', 'name')
+						->renderSelectFieldset('Type', 'type', $FundControl->getItemTypes(), array('id="types-select"'))
+						->renderCustom(function() {
+							?>
+							<fieldset class="input-for" id="new-type-container" style="display:none;">
+								<legend class="input-for-title">New type</legend>
+								<input type="text" name="new_type" value="" disabled="disabled" />
+							</fieldset>
+							<?
+						})
+						->renderNumberFieldset('Amount', 'value')
+						->renderSubmitFieldset('Add', 'save')
+				//*/
+				;
 				?>
 
 				<input

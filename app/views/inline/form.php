@@ -7,18 +7,18 @@ $Render = new FundFormRender();
 	<form action="" method="post">
 		<?
 		$Render
-			->renderTextFieldset('Název', 'name')
-			->renderSelectFieldset('Typ', 'type', $FundControl->getItemTypes(), array('id="types-select"'))
+			->renderTextFieldset('Name', 'name')
+			->renderSelectFieldset('Type', 'type', $FundControl->getItemTypes(), array('id="types-select"'))
 			->renderCustom(function(){
 				?>
 				<fieldset class="input-for" id="new-type-container" style="display:none;">
-					<legend class="input-for-title">Nový typ</legend>
+					<legend class="input-for-title">New type</legend>
 					<input type="text" name="new_type" value="" disabled="disabled" />
 				</fieldset>
 				<?
 			})
-			->renderNumberFieldset('Hodnota', 'value')
-			->renderSubmitFieldset('Přidat', 'save');
+			->renderNumberFieldset('Amount', 'value')
+			->renderSubmitFieldset('Add', 'save');
 		?>
 	</form>
 	<br class="clear" />

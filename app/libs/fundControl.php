@@ -37,9 +37,8 @@ class FundControl {
 	public function view($viewName) {
 		$viewFullName = $this->getInlineViewFullName($viewName);
 
-		$FundControl = $this;
-
 		if (file_exists($viewFullName)) {
+			$FundControl = $this;
 			require_once $viewFullName;
 		}
 
@@ -68,12 +67,12 @@ class FundControl {
 				$this->Session
 					->setUserId($userId)
 					->setIsLogged();
-				$this->flashSuccess('Úspěšně přihlášen.');
+				$this->flashSuccess('Successfuly logged in.');
 			} else {
-				$this->flashError('Špatné uživatelské údaje!');
+				$this->flashError('Invalid user data!');
 			}
 		} else {
-			$this->flashError('Prázdné uživatelské údaje!');
+			$this->flashError('Empty user data!');
 		}
 		$this->reload();
 	}
@@ -105,7 +104,7 @@ class FundControl {
 
 	public function newUser($login, $password) {
 		if (empty($login) || empty($password)) {
-			$this->flashError('Prázdné uživatelské údaje!');
+			$this->flashError('Empty user data!');
 		} else {
 			$qry = "INSERT INTO `" . Setup::PREFIX . "users` (`login`, `password`)
 				VALUES (
@@ -113,7 +112,7 @@ class FundControl {
 					'" . $this->crypt($password) . "')";
 			$this->Db->query($qry);
 
-			$this->flashSuccess('Uživatel přidán');
+			$this->flashSuccess('User inserted!');
 		}
 		$this->reload();
 	}
@@ -126,14 +125,14 @@ class FundControl {
 	public function getItemTypes($force = false) {
 		if(!isset($this->itemTypes) || $force) {
 			$this->itemTypes = array();
-			$this->itemTypes[0] = '== Vyberte typ ==';
+			$this->itemTypes[0] = '== Choose type ==';
 
 			$res = $this->Db->query("SELECT id, name FROM `" . Setup::PREFIX . "item_types` ORDER BY name");
 			while ($row = $this->Db->fetchAssoc($res)) {
 				$this->itemTypes[(int)$row['id']] = $row['name'];
 			}
 
-			$this->itemTypes[self::OTHER_TYPE_ID] = 'Jiný';
+			$this->itemTypes[self::OTHER_TYPE_ID] = 'Other';
 		}
 		return $this->itemTypes;
 	}
@@ -149,7 +148,7 @@ class FundControl {
 			$this->Db->query("INSERT INTO `" . Setup::PREFIX . "item_types` (`name`) VALUES
 				('" . $this->clear($this->data['new_type']) . "')");
 
-			$this->flashSuccess('Nový typ přidán.');
+			$this->flashSuccess('New type was added.');
 		}
 		return $this;
 	}
@@ -184,97 +183,14 @@ class FundControl {
 		$this->Db->query("INSERT INTO `" . Setup::PREFIX . "items` (`user_id`, `item_data`, `time`) VALUES
 			('" . (int)$userId . "', '" . $itemData . "', '" . $time . "')");
 
-		$this->flashSuccess('Položka přidána.');
+		$this->flashSuccess('Item added.');
 		return $this;
 	}
 
 	public function logout() {
 		$this->Session->logout();
 		$this
-			->flashSuccess('Úspěšně odhlášen')
+			->flashSuccess('You are no longer logged!')
 			->reload();
-	}
-}
-
-class FundSession {
-	const SESSION_NAME = 'fund_session';
-	private $session;
-
-	public function __construct() {
-		$this->session = &$_SESSION[self::SESSION_NAME];
-		ArrayFunctions::initArray($this->session);
-	}
-
-	public function isLogged() {
-		return ($this->session['logged'] === true);
-	}
-
-	public function setUserId($userId) {
-		$this->session['userId'] = (int)$userId;
-		return $this;
-	}
-
-	public function getUserId() {
-		if (!$this->isLogged()) {
-			return 0;
-		}
-		return $this->session['userId'];
-	}
-
-	public function setIsLogged() {
-		$this->session['logged'] = true;
-		return $this;
-	}
-
-	public function addFlash(FlashMessage $Message) {
-		ArrayFunctions::initArray($this->session['flashes']);
-
-		$this->session['flashes'][] = array(
-			'message' => $Message->getMessage(),
-			'type' => $Message->getType()
-		);
-		return $this;
-	}
-
-	/** @return FlashMessage[] */
-	public function getFlashes() {
-		$flashes = array();
-		if (is_array($this->session['flashes'])) {
-			foreach($this->session['flashes'] as $flashData) {
-				$flashes[] = new FlashMessage($flashData['message'], $flashData['type']);
-			}
-		}
-		return $flashes;
-	}
-
-	public function clearFlashes() {
-		$this->session['flashes'] = array();
-		return $this;
-	}
-
-	public function logout() {
-		unset($this->session['userId'], $this->session['logged']);
-		return $this;
-	}
-}
-
-class FlashMessage {
-	const SUCCESS = 'success';
-	const ERROR = 'error';
-
-	private $type;
-	private $message;
-
-	public function __construct($message, $type = self::SUCCESS) {
-		$this->message = $message;
-		$this->type = $type;
-	}
-
-	public function getType() {
-		return $this->type;
-	}
-
-	public function getMessage() {
-		return $this->message;
 	}
 }
