@@ -1,0 +1,18 @@
+2014-08-07 14:25:58: array (
+  'Database->query' => 'error',
+  'error' => 'Table \'fundcontrol.fundcontrol_users\' doesn\'t exist',
+  'query' => 'SELECT id
+				FROM `fundcontrol_users`
+				WHERE
+					login = \'mortal_flesh\'
+					AND password = \'MFHWBqqDw.Zwo\'',
+)
+2014-08-07 14:26:09: array (
+  'Database->query' => 'error',
+  'error' => 'Table \'fundcontrol.fundcontrol_users\' doesn\'t exist',
+  'query' => 'SELECT id
+				FROM `fundcontrol_users`
+				WHERE
+					login = \'mortal_flesh\'
+					AND password = \'MFHWBqqDw.Zwo\'',
+)

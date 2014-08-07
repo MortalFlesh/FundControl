@@ -1,0 +1,4 @@
+FLASH messages
+-pridat do inline flashemessages nejaky neco, aby to ajaxem refreshovalo co chvili a vypisovalo hlasky
+	- refreshu tam moc nebude.. :P
+- a taky pridat neco, co je bude po chvili skryvat, at tam nestrasi furt
