@@ -3,7 +3,7 @@ session_start();
 
 // ================= initialization =================
 
-require_once $rootDir . 'libs/bootstrap.php';
+require_once $rootDir . '../vendor/autoload.php';
 require_once $rootDir . 'core/config.php';
 
 if ($config['debug']) {
