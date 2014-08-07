@@ -12,8 +12,8 @@ require_once $rootDir . 'core/fundControlApp.php';
 <div class="scrollable">
 	<div class="scrollable-content">
 		<div class="list-group">
-			<a ng-repeat="item in scrollItems" href="#" class="list-group-item">
-				{{ item}} <i class="fa fa-chevron-right pull-right"></i>
+			<a ng-repeat="itemType in itemTypes" href="#" class="list-group-item">
+				{{itemType.getName()}} <i class="fa fa-chevron-right pull-right"></i>
 			</a>
 		</div>
 	</div>

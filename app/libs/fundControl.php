@@ -13,6 +13,12 @@ class FundControl {
 
 	private $data;
 
+	/**
+	 * @param string $homeUrl
+	 * @param string $rootDir
+	 * @param Database $Db
+	 * @param FundSession $Session
+	 */
 	public function __construct($homeUrl, $rootDir, Database $Db, FundSession $Session) {
 		$this->homeUrl = $homeUrl;
 		$this->rootDir = $rootDir;
@@ -122,6 +128,10 @@ class FundControl {
 		exit;
 	}
 
+	/**
+	 * @param bool $force
+	 * @return array
+	 */
 	public function getItemTypes($force = false) {
 		if(!isset($this->itemTypes) || $force) {
 			$this->itemTypes = array();
@@ -192,5 +202,10 @@ class FundControl {
 		$this
 			->flashSuccess('You are no longer logged!')
 			->reload();
+	}
+
+	public function printAsJsonAndDie(array $data) {
+		echo json_encode($data);
+		exit;
 	}
 }

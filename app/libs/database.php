@@ -8,7 +8,14 @@ class Database {
 	/** @var LogWriter */
 	private $Log;
 
-	public function __construct($host, $user, $password, $database, $encoding, LogWriter $Log) {
+	public function __construct(Config $Config, LogWriter $Log) {
+		$dbConfig = $Config->getDbConfig();
+		$host = $dbConfig['host'];
+		$user = $dbConfig['user'];
+		$password = $dbConfig['password'];
+		$database = $dbConfig['database'];
+		$encoding = $dbConfig['encoding'];
+
 		$this->connection = mysql_connect($host, $user, $password);
 		$this->Log = $Log;
 

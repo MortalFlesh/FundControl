@@ -22,6 +22,10 @@ require_once $rootDir . 'core/fundControlApp.php';
 		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-desktop.min.css" />
 		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/app.css" />
 		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/style.css" />
+
+		<script type="text/javascript">
+			var homeUrl = '<?=$FundControl->getHomeUrl()?>';
+		</script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
@@ -29,6 +33,12 @@ require_once $rootDir . 'core/fundControlApp.php';
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script type="text/javascript" src="<?=$FundControl->getHomeUrl()?>scripts/jquery.fundControl.js?t="<?=time()?>></script>
 		<script src="<?=$FundControl->getHomeUrl()?>scripts/app.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/itemType.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/itemTypes.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/item.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/services/api-service.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/services/itemTypes-service.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>scripts/controllers/mainController.js"></script>
 	</head>
 	<body ng-app="FundControlApp" ng-controller="MainController">
 
