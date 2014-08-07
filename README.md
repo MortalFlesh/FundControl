@@ -1,3 +1,9 @@
+Just my little application to personal fund control and to find out how Angular works.
+
+===================
+
+Based on:
+
 # Mobile Angular UI
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
