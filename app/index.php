@@ -27,6 +27,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 
 		<script type="text/javascript">
 			var homeUrl = '<?=$FundControl->getHomeUrl()?>';
+			var logged = <?=($FundControl->isLogged() ? 'true' : 'false')?>;
 		</script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
@@ -85,7 +86,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 				</div>
 
 				<?
-				$FundControl->view('flashes', $FundControl);
+				$FundControl->view('flashes');
 				?>
 
 				<ng-view class="app-content" ng-hide="loading"></ng-view>

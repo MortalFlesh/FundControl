@@ -19,12 +19,12 @@ class MainController implements IController {
 	public function checkActions() {
 		if (isset($_POST['save'])) {
 			$this->FundControl
-					->assignData($_POST)
-					->saveItemForm();
+				->assignData($_POST)
+				->saveItemForm();
 		} elseif (isset($_POST['authorize'])) {
 			$this->FundControl
-					->assignData($_POST)
-					->authorize();
+				->assignData($_POST)
+				->authorize();
 		} elseif (isset($_GET['logout'])) {
 			$this->FundControl->logout();
 		} elseif (isset($_GET['new_user']) && $_GET['new_user'] == 'efa33KFJ41AD3efes') {
@@ -35,9 +35,12 @@ class MainController implements IController {
 			$this->Setup->install();
 
 			$this->FundControl
-					->flashSuccess('Installed')
-					->reload();
+				->flashSuccess('Installed')
+				->reload();
 		} elseif (isset($_GET['info']) && $_GET['info'] == 'afej8183fakkjfa') {
+		} elseif (isset($_GET['message'])) {
+			$this->FundControl->flashSuccess($_GET['message']);
+			exit;
 		}
 	}
 

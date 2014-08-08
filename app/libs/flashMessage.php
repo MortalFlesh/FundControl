@@ -19,4 +19,11 @@ class FlashMessage {
 	public function getMessage() {
 		return $this->message;
 	}
+	
+	public function toArray() {
+		return array(
+			'message' => $this->getMessage(),
+			'type' => $this->getType(),
+		);
+	}
 }

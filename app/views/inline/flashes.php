@@ -1,16 +1,9 @@
 <?php
 /* @var $FundControl FundControl */
-$flashes = $FundControl->getFlashesAndClear();
 ?>
-<div id="flash-container">
-	<?
-	foreach($flashes as $FlashMessage) {
-		?>
-		<div class="flash <?=$FlashMessage->getType()?>">
-			<?=$FlashMessage->getMessage();?>
-		</div>
-		<?
-	}
-	?>
+<div id="flash-container" ng-show="flashes">
+	<div ng-repeat="FlashMessage in flashes" class="flash {{FlashMessage.getType()}}">
+		{{FlashMessage.getMessage()}}
+	</div>
 </div>
 <?

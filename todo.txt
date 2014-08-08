@@ -16,3 +16,4 @@ $JavascriptAutoloader
 	->autoload();
 
 - pridavani konretnich souboru (kvuli poradi)
+- priani hashovani pro scripty pri vytvareni cache - fileName = MD5({directoryName}_{recursively[1|0]} => compiledCacheName = fileNames.implode('|').md5()
