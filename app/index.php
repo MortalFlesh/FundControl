@@ -41,6 +41,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 			->addDirectory('scripts')
 			->addDirectory('scripts/models')
 			->addDirectory('scripts/services')
+			->addDirectory('scripts/directives')
 			->addDirectory('scripts/controllers')
 			->autoload();
 		?>

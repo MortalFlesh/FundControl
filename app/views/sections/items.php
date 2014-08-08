@@ -7,12 +7,12 @@ require_once $rootDir . 'core/fundControlApp.php';
 	<span><?=$FundControl->getTitle()?> / Items</span>
 </div>
 
-<input type="search" class="form-control app-search" placeholder="Search.." />
+<input type="search" class="form-control app-search" placeholder="Search.." ng-model="searchItems" />
 
 <div class="scrollable">
 	<div class="scrollable-content">
 		<div class="list-group">
-			<a ng-repeat="item in scrollItems" href="#" class="list-group-item">
+			<a ng-repeat="item in scrollItems | filter:searchItems" href="#" class="list-group-item">
 				{{ item}} <i class="fa fa-chevron-right pull-right"></i>
 			</a>
 		</div>

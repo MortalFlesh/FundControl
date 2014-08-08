@@ -1,6 +1,6 @@
-app.controller('MainController', function($rootScope, $scope, itemTypesService, flashService, $interval) {
+app.controller('MainController', function($rootScope, $scope, itemTypesService, flashService, $interval, FlashMessage) {
 	var flashesInterval;
-
+	
 	var getFlashes = function() {
 		flashService.get().then(function(FlashMessages){
 			$scope.flashes = FlashMessages.getFlashMessages();
@@ -22,6 +22,12 @@ app.controller('MainController', function($rootScope, $scope, itemTypesService, 
 		}
 
 		window.location.href = '?logout';
+	};
+
+	$scope.addFlashMessage = function(message, type){
+		var flashes = [];
+		flashes.push(FlashMessage.build({message:message, type:type}));
+		$scope.flashes = flashes;
 	};
 
 	var scrollItems = [];
