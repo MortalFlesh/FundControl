@@ -1,3 +1,5 @@
 /vendor
 /nbproject
 /demo
+/app/cache
+!/app/cache/.htaccess
