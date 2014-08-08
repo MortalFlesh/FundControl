@@ -47,7 +47,7 @@ class JavascriptAutoloader {
 
 	private function autoloadDirectory(JADirInfo $JADirInfo) {
 		foreach(new DirectoryIterator($this->rootDir . $JADirInfo->getDirName()) as $FileInfo) {
-			if ($FileInfo->isDot()) {
+			if ($FileInfo->isDot() || ($FileInfo->isDir() && !$JADirInfo->getRecursively())) {
 				continue;
 			} elseif ($FileInfo->isDir() && $JADirInfo->getRecursively()) {
 				$this->autoloadDirectory(new JADirInfo($FileInfo->getFilename(), true));

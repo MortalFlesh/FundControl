@@ -1,4 +1,4 @@
-app.factory('ItemTypes', function(){
+app.factory('ItemTypes', function(ItemType){
 	function ItemTypes(itemTypes) {
 		this.itemTypes = itemTypes;
 	}
@@ -8,10 +8,14 @@ app.factory('ItemTypes', function(){
 	};
 
 	ItemTypes.build = function(data) {
-		// todo: return itemTypes.push -> foreach data -> ItemType.build(data1);
-		console.log('typesBuild');
-		console.log(data);
-		return new ItemTypes(data.itemTypes);
+		var itemTypes = [];
+		
+		angular.forEach(data, function(name, id){
+			var Type = ItemType.build({name:name, id:id});
+			itemTypes.push(Type);
+		});
+
+		return new ItemTypes(itemTypes);
 	};
 
 	ItemTypes.apiResponseTransformer = function(responseData) {

@@ -20,6 +20,7 @@ app.controller('MainController', function($rootScope, $scope, itemTypesService) 
 		window.location.href = '?logout';
 	};
 
-	$scope.itemTypes = itemTypesService.get();
-	console.log($scope.itemTypes);
+	itemTypesService.get().then(function(ItemTypes){
+		$scope.itemTypes = ItemTypes.getItemTypes();
+	});
 });
