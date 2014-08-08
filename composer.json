@@ -4,8 +4,5 @@
 	"require": {
 		"php": ">=5.3.1",
 		"nette/robot-loader": "2.3.*@dev"
-	},
-	"autoload": {
-		"classmap": ["app/libs/"]
 	}
 }

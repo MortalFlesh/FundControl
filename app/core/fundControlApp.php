@@ -5,6 +5,12 @@ session_start();
 
 require_once $rootDir . '../vendor/autoload.php';
 
+// Nette RobotLoader autoloading
+$Loader = new Nette\Loaders\RobotLoader;
+$Loader->addDirectory($rootDir . 'libs/');
+$Loader->setCacheStorage(new Nette\Caching\Storages\FileStorage($rootDir . 'cache'));
+$Loader->register();
+
 $ServiceFactory = new ServiceFactory($rootDir);
 
 $FundControl = $ServiceFactory->getServiceByName('FundControl');
