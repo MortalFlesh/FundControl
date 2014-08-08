@@ -5,6 +5,12 @@ session_start();
 
 require_once $rootDir . '../vendor/autoload.php';
 
+$kint = 'C:/xampp/htdocs/_pomocne/_kint.php';
+if (file_exists($kint)) {
+	@require_once $kint;
+}
+
+
 // Nette RobotLoader autoloading
 $Loader = new Nette\Loaders\RobotLoader;
 $Loader->addDirectory($rootDir . 'libs/');

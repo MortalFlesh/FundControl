@@ -2,6 +2,8 @@
 $rootDir = __DIR__ . '/';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
+
+$JavascriptAutoloader = new JavascriptAutoloader();
 ?>
 <!doctype html>
 <html lang="cs">
@@ -31,14 +33,16 @@ require_once $rootDir . 'core/fundControlApp.php';
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
 		<script src="../dist/js/mobile-angular-ui.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script type="text/javascript" src="<?=$FundControl->getHomeUrl()?>scripts/jquery.fundControl.js?t="<?=time()?>></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/app.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/itemType.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/itemTypes.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/models/item.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/services/api-service.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/services/itemTypes-service.js"></script>
-		<script src="<?=$FundControl->getHomeUrl()?>scripts/controllers/mainController.js"></script>
+		<?
+		$JavascriptAutoloader
+			->setHomeUrl($FundControl->getHomeUrl())
+			->setRootDir($rootDir)
+			->addDirectory('scripts')
+			->addDirectory('scripts/models')
+			->addDirectory('scripts/services')
+			->addDirectory('scripts/controllers')
+			->autoload();
+		?>
 	</head>
 	<body ng-app="FundControlApp" ng-controller="MainController">
 

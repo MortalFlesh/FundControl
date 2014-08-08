@@ -2,3 +2,15 @@ FLASH messages
 -pridat do inline flashemessages nejaky neco, aby to ajaxem refreshovalo co chvili a vypisovalo hlasky
 	- refreshu tam moc nebude.. :P
 - a taky pridat neco, co je bude po chvili skryvat, at tam nestrasi furt
+
+JavascriptAutoloader
+
+$JavascriptAutoloader = new JavascriptAutoloader();
+$JavascriptAutoloader
+	->setHomeUrl('http://test/')
+	->addDirectory($rootDir . 'scripts')
+	->addDirectory($rootDir . 'scripts/modules, $recursively = true)
+	->setCacheStorage($rootDir . 'cache')
+	->setUseMinify()
+	->compileToOneFile()
+	->autoload();
