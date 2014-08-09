@@ -32,6 +32,7 @@ app.controller('newItemController', ['$rootScope', '$scope', '$http', function($
 		})
 		.success($scope.clearForm)
 		.success($scope.loadItemTypes)
+		.success($scope.loadItems)
 		.finally(function(){
 			$rootScope.loading = false;
 			$scope.loadFlashes();

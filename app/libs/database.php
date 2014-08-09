@@ -82,4 +82,8 @@ class Database {
 	public function escape($string) {
 		return mysql_real_escape_string($string, $this->connection);
 	}
+
+	public function lastInsertedId() {
+		return mysql_insert_id($this->connection);
+	}
 }

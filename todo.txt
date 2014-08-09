@@ -1,7 +1,9 @@
-FLASH messages
--pridat do inline flashemessages nejaky neco, aby to ajaxem refreshovalo co chvili a vypisovalo hlasky
-	- refreshu tam moc nebude.. :P
-- a taky pridat neco, co je bude po chvili skryvat, at tam nestrasi furt
+Items v db
+- udelat, aby se ukladaly data zvlast, kvuli pripadnym zmenam v ukladani (aby se nemusely menit data)
+- pri nacitani pak udelat arrayToJson($row);
+	-> new Item() -> serialize()
+
+Refaktorovat FundControl
 
 JavascriptAutoloader
 

@@ -4,6 +4,7 @@ class FundControl {
 	const OTHER_TYPE_ID = -1;
 
 	private $rootDir, $homeUrl, $itemTypes, $htmlTitle;
+	private $newItemTypeId;
 
 	/** @var Database */
 	private $Db;
@@ -158,6 +159,8 @@ class FundControl {
 			$this->Db->query("INSERT INTO `" . Setup::PREFIX . "item_types` (`name`) VALUES
 				('" . $this->clear($this->data['newTypeName']) . "')");
 
+			$this->newItemTypeId = $this->Db->lastInsertedId();
+
 			$this->flashSuccess('New type was added.');
 		}
 		return $this;
@@ -169,15 +172,16 @@ class FundControl {
 		$formatedTime = $Time->format(Database::TIME_FORMAT);
 		$typeId = (int)$this->data['itemType']['id'];
 
-		if ($typeId === self::OTHER_TYPE_ID) {
+		if ($typeId === self::OTHER_TYPE_ID && !empty($this->newItemTypeId)) {
 			$type = $this->data['newTypeName'];
+			$typeId = $this->newItemTypeId;
 		} else {
 			$type = $itemTypes[$typeId];
 		}
 
 		$Item = new Item(
 			$this->clear($this->data['name']),
-			$type,
+			new ItemType($typeId, $type),
 			$this->clear($this->data['amount']),
 			$formatedTime
 		);
@@ -205,7 +209,21 @@ class FundControl {
 	}
 
 	public function printAsJsonAndDie(array $data) {
-		echo json_encode($data);
+		echo ArrayFunctions::arrayToJson($data);
 		exit;
+	}
+
+	public function getItems() {
+		$items = array();
+
+		$res = $this->Db->query("SELECT `id`, `item_data`
+			FROM `" . Setup::PREFIX . "items`
+			WHERE user_id = " . $this->Session->getUserId());
+
+		while($row = $this->Db->fetchAssoc($res)) {
+			$items[$row['id']] = $row['item_data'];
+		}
+
+		return $items;
 	}
 }

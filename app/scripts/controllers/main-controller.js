@@ -1,4 +1,5 @@
-app.controller('MainController', function($rootScope, $scope, $timeout, itemTypesService, flashService, FlashMessage) {
+app.controller('MainController', function($rootScope, $scope, $timeout,
+	itemTypesService, flashService, itemsService) {
 
 	$rootScope.$on("$routeChangeStart", function() {
 		$rootScope.loading = true;
@@ -30,20 +31,13 @@ app.controller('MainController', function($rootScope, $scope, $timeout, itemType
 		});
 	};
 
-	$scope.addFlashMessage = function(message, type){
-		var flashes = [];
-		flashes.push(FlashMessage.build({message:message, type:type}));
-		$scope.flashes = flashes;
+	$scope.loadItems = function() {
+		itemsService.get().then(function(Items){
+			$scope.items = Items.getItems();
+		});
 	};
-
-	var scrollItems = [];
-
-	for (var i = 1; i <= 100; i++) {
-		scrollItems.push("Item " + i);
-	}
-
-	$scope.scrollItems = scrollItems;
 
 	$scope.loadItemTypes();
 	$scope.loadFlashes();
+	$scope.loadItems();
 });
