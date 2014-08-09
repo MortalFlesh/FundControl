@@ -1,4 +1,4 @@
-app.controller('MainController', function($rootScope, $scope, itemTypesService, flashService, FlashMessage) {
+app.controller('MainController', function($rootScope, $scope, $timeout, itemTypesService, flashService, FlashMessage) {
 
 	$rootScope.$on("$routeChangeStart", function() {
 		$rootScope.loading = true;
@@ -13,9 +13,15 @@ app.controller('MainController', function($rootScope, $scope, itemTypesService, 
 	};
 
 	$scope.loadFlashes = function() {
-		flashService.get().then(function(FlashMessages){
-			$scope.flashes = FlashMessages.getFlashMessages();
-		});
+		flashService.get()
+			.then(function(FlashMessages){
+				$scope.flashes = FlashMessages.getFlashMessages();
+			})
+			.then(function(){
+				$timeout(function(){
+					$scope.flashes = {};
+				}, 3000);
+			});
 	};
 
 	$scope.loadItemTypes = function() {
