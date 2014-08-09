@@ -33,7 +33,6 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
 		<script src="../dist/js/mobile-angular-ui.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<?
 		$JavascriptAutoloader
 			->setHomeUrl($FundControl->getHomeUrl())

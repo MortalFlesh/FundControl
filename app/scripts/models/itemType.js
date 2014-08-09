@@ -5,7 +5,7 @@ app.factory('ItemType', function(){
 	}
 
 	ItemType.prototype.getId = function() {
-		return this.id;
+		return parseInt(this.id);
 	};
 
 	ItemType.prototype.getName = function() {

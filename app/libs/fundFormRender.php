@@ -82,14 +82,23 @@ class FundFormRender {
 		?>
 		<fieldset class="input-for">
 			<legend class="input-for-title"><?=$title?></legend>
-			<select name="<?=$name?>" <?=implode(' ', $params)?>>
-				<?
-				foreach($values as $id => $value) {
-					?><option value="<?=$id?>"><?=$value?></option><?
-				}
-				?>
-			</select>
+			<?
+			$this->renderSelect($name, $values, $params);
+			?>
 		</fieldset>
+		<?
+		return $this;
+	}
+
+	public function renderSelect($name, array $values, array $params) {
+		?>
+		<select name="<?=$name?>" <?=implode(' ', $params)?>>
+			<?
+			foreach($values as $id => $value) {
+				?><option value="<?=$id?>"><?=$value?></option><?
+			}
+			?>
+		</select>
 		<?
 		return $this;
 	}
@@ -126,7 +135,28 @@ class FundFormRender {
 	 * @param string $value
 	 * @return FundFormRender
 	 */
-	public function renderTextModel($model, $title, $name, $placeHolder = '', $value = '') {
+	public function renderNumberModel($model, $title, $name, $placeHolder = '', $value = '') {
+		$this->renderInput('tel', $name, $value, array(
+			'bs-form-control',
+			'ng-model="' . $model . '"',
+			'label="' . $title . '"',
+			'label-class="col-xs-3 col-sm-2 col-lg-1"',
+			'class="col-xs-9 col-sm-10 col-lg-11"',
+			'placeholder="' . $placeHolder . '"',
+		));
+		return $this;
+	}
+
+	/**
+	 * @param string $model
+	 * @param string $title
+	 * @param string $name
+	 * @param string $placeHolder
+	 * @param string $value
+	 * @param array $params
+	 * @return FundFormRender
+	 */
+	public function renderTextModel($model, $title, $name, $placeHolder = '', $value = '', array $params = array()) {
 		$this->renderInput('text', $name, $value, array(
 			'bs-form-control',
 			'ng-model="' . $model . '"',
@@ -134,6 +164,7 @@ class FundFormRender {
 			'label-class="col-xs-3 col-sm-2 col-lg-1"',
 			'class="col-xs-9 col-sm-10 col-lg-11"',
 			'placeholder="' . $placeHolder . '"',
+			implode(' ', $params)
 		));
 		return $this;
 	}
@@ -176,6 +207,29 @@ class FundFormRender {
 			</div>
 		</div>
 		<?
+		return $this;
+	}
+
+	/**
+	 * @param string $model
+	 * @param string $title
+	 * @param string $name
+	 * @param string $options
+	 * @param string $action
+	 * @param array $params
+	 * @return FundFormRender
+	 */
+	public function renderSelectModel($model, $title, $name, $options, $action = '', array $params = array()) {
+		$this->renderSelect($name, array(), array(
+			'bs-form-control',
+			'ng-model="' . $model . '"',
+			'label="' . $title . '"',
+			'label-class="col-xs-3 col-sm-2 col-lg-1"',
+			'class="col-xs-9 col-sm-10 col-lg-11"',
+			'ng-options="' . $options . '"',
+			$action,
+			implode(' ', $params),
+		));
 		return $this;
 	}
 }
