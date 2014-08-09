@@ -8,6 +8,10 @@ class AjaxActionGetFlashMessages implements IAjaxAction {
 		$this->FundControl = $FundControl;
 	}
 
+	public function assignData($data) {
+		return $this;
+	}
+
 	public function run() {
 		$flashes = $this->FundControl->getFlashesAndClear();
 

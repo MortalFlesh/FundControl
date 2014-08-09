@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(E_ALL ^ E_NOTICE);
 
 // ================= initialization =================
 
@@ -27,7 +28,3 @@ $FundControl = $ServiceFactory->getServiceByName('FundControl');
 $MainController = $ServiceFactory->getServiceByName('MainController');
 /* @var $MainController MainController */
 $MainController->checkActions();
-
-$AjaxController = $ServiceFactory->getServiceByName('AjaxController');
-/* @var $AjaxController AjaxController */
-$AjaxController->checkActions();

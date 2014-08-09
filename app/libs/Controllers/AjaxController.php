@@ -33,7 +33,9 @@ class AjaxController implements IController {
 	private function runAction() {
 		try {
 			$AjaxAction = $this->Factory->getAction($this->data['action']);
-			$AjaxAction->run();
+			$AjaxAction
+				->assignData($this->data['data'])
+				->run();
 		} catch (AjaxActionNotFoundException $Exception) {
 			echo 'ERROR: ' . $Exception->getMessage();
 		}

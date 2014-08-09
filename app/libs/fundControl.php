@@ -154,9 +154,9 @@ class FundControl {
 	}
 
 	private function prepareAndSaveNewType() {
-		if (!empty($this->data['newItemType'])) {
+		if (!empty($this->data['newTypeName'])) {
 			$this->Db->query("INSERT INTO `" . Setup::PREFIX . "item_types` (`name`) VALUES
-				('" . $this->clear($this->data['newItemType']) . "')");
+				('" . $this->clear($this->data['newTypeName']) . "')");
 
 			$this->flashSuccess('New type was added.');
 		}
@@ -167,10 +167,10 @@ class FundControl {
 		$itemTypes = $this->getItemTypes(true);
 		$Time = new DateTime();
 		$formatedTime = $Time->format(Database::TIME_FORMAT);
-		$typeId = (int)$this->data['type'];
+		$typeId = (int)$this->data['itemType']['id'];
 
 		if ($typeId === self::OTHER_TYPE_ID) {
-			$type = $this->data['newItemType'];
+			$type = $this->data['newTypeName'];
 		} else {
 			$type = $itemTypes[$typeId];
 		}

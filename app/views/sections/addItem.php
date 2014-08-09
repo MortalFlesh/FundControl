@@ -35,7 +35,7 @@ $Render = new FundFormRender();
 						<?
 					})
 					->renderNumberModel('addingItem.amount', 'Amount', 'amount', 'amount')
-					->renderSubmitModel('Add Item', 'save', '');
+					->renderSubmitModel('Add Item', 'save', 'saveNewItem()');
 				?>
 			</div>
 		</form>

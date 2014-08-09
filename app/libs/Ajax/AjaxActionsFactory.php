@@ -3,6 +3,7 @@
 class AjaxActionsFactory {
 	const ACTION_GET_ITEM_TYPES = 'get-item-types';
 	const ACTION_GET_FLASH_MESSAGES = 'get-flash-messages';
+	const ACTION_SAVE_NEW_ITEM = 'save-new-item';
 
 	/** @var ServiceFactory */
 	private $ServiceFactory;
@@ -20,6 +21,7 @@ class AjaxActionsFactory {
 		switch($actionName) {
 			case self::ACTION_GET_ITEM_TYPES: return $this->getService('AjaxActionGetItemTypes');
 			case self::ACTION_GET_FLASH_MESSAGES: return $this->getService('AjaxActionGetFlashMessages');
+			case self::ACTION_SAVE_NEW_ITEM: return $this->getService('AjaxActionSaveNewItem');
 			default: throw new AjaxActionNotFoundException($actionName);
 		}
 	}

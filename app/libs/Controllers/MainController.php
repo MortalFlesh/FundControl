@@ -17,11 +17,7 @@ class MainController implements IController {
 	}
 
 	public function checkActions() {
-		if (isset($_POST['save'])) {
-			$this->FundControl
-				->assignData($_POST)
-				->saveItemForm();
-		} elseif (isset($_POST['authorize'])) {
+		if (isset($_POST['authorize'])) {
 			$this->FundControl
 				->assignData($_POST)
 				->authorize();
