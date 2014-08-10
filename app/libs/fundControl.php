@@ -221,7 +221,19 @@ class FundControl {
 			WHERE user_id = " . $this->Session->getUserId());
 
 		while($row = $this->Db->fetchAssoc($res)) {
-			$items[$row['id']] = $row['item_data'];
+			$itemData = json_decode($row['item_data'], true);
+
+			$Item = new Item(
+				$itemData['name'],
+				new ItemType(
+					$itemData['itemType']['id'],
+					$itemData['itemType']['name']
+				),
+				$itemData['amount'],
+				$row['time']
+			);
+
+			$items[$row['id']] = $Item->serialize();
 		}
 
 		return $items;
