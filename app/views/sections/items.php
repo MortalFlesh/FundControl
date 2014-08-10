@@ -18,7 +18,7 @@ require_once $rootDir . 'core/fundControlApp.php';
 						{{item.getName()}} <i class="pull-right glyphicon fa" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i>
 					</a>
 				</accordion-heading>
-				{{item}}
+				<strong>Amount:</strong>{{item.getAmount()}} | <strong>Type:</strong>{{item.getItemType().getName()}}
 			</accordion-group>
 		</accordion>
 	</div>

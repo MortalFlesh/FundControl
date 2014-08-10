@@ -82,6 +82,7 @@ accordion .panel-group {
 				accordion .panel-group .list-group .panel-heading .list-group-item.list-group-item-opened {
 					border-bottom: 1px solid #ddd;
 					background-color: #f5f5f5;
+					font-weight: bold;
 				}
 				accordion .panel-group .list-group .panel-heading .list-group-item.list-group-item-closed {
 				}
@@ -93,10 +94,11 @@ accordion .panel-group {
 					}
 
 			accordion .panel-group .list-group .panel-collapse .panel-body {
+				color: #555;
 			}
 			accordion .panel-group .list-group.list-group-opened .panel-collapse .panel-body {
 				background-color: #f5f5f5;
 			}
-				accordion .panel-group .list-group .panel-collapse .panel-body span.ng-scope{
-					padding-left: 40px;
+				accordion .panel-group .list-group .panel-collapse .panel-body span.ng-scope {
+					padding: 0 5px;
 				}
