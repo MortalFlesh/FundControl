@@ -102,3 +102,11 @@ accordion .panel-group {
 				accordion .panel-group .list-group .panel-collapse .panel-body span.ng-scope {
 					padding: 0 5px;
 				}
+
+			accordion.panel-body-no-padding .panel-group .list-group .panel-collapse .panel-body {
+				padding-top: 0;
+				padding-bottom: 0;
+			}
+				accordion.panel-body-no-padding .panel-group .list-group .panel-collapse .panel-body div.list-group-empty {
+					padding-top: 15px;
+				}

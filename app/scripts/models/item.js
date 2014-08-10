@@ -2,6 +2,7 @@ app.factory('Item', function(ItemType){
 	function Item(id, name, ItemType, amount) {
 		this.id = id;
 		this.name = name;
+		this.itemTypeId = ItemType.getId();
 		this.ItemType = ItemType;
 		this.amount = amount;
 	}
@@ -12,6 +13,10 @@ app.factory('Item', function(ItemType){
 
 	Item.prototype.getName = function() {
 		return this.name;
+	};
+
+	Item.prototype.getItemTypeId = function() {
+		return this.itemTypeId;
 	};
 
 	Item.prototype.getItemType = function() {
