@@ -37,6 +37,8 @@ app.controller('MainController', function($rootScope, $scope, $timeout,
 		});
 	};
 
+	$scope.oneAtATime = true;
+
 	$scope.loadItemTypes();
 	$scope.loadFlashes();
 	$scope.loadItems();

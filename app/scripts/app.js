@@ -2,7 +2,7 @@ var app = angular.module('FundControlApp', [
 	"ngRoute",
 	"ngTouch",
 	"mobile-angular-ui",
-	//"ui.bootstrap", // http://angular-ui.github.io/bootstrap/
+	"ui.bootstrap", // http://angular-ui.github.io/bootstrap/
 ]);
 
 app.config(function($routeProvider, $locationProvider) {
