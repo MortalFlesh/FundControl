@@ -27,6 +27,7 @@ class JavascriptAutoloader {
 
 	public function setDenyCache() {
 		$this->cacheAllowed = false;
+		return $this;
 	}
 
 	public function addDirectory($directory, $recursively = false) {
