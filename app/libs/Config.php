@@ -10,7 +10,7 @@ class Config {
 			'encoding' => 'utf8'
 		),
 		'homeUrl' => 'http://fundcontrol/app/',
-		'debug' => true,
+		'debug' => false,
 	);
 
 	public function getDbConfig() {
