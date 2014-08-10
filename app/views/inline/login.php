@@ -4,7 +4,7 @@
 $Render = new FundFormRender();
 ?>
 <div id="user-panel">
-	<form action="<?=$FundControl->getHomeUrl()?>api.php" method="post">
+	<form action="<?=$FundControl->getHomeUrl()?>index.php" method="post">
 		<div bs-panel title="Login">
 			<?
 			$Render
