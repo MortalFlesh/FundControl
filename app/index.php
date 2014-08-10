@@ -19,9 +19,9 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 		<meta name="apple-mobile-web-app-title" content="Fund Control">
 		<link rel="apple-touch-icon" href="<?=$FundControl->getHomeUrl()?>imgs/logo.png">
 		<link rel="shortcut icon" href="<?=$FundControl->getHomeUrl()?>imgs/favicon.png" type="image/x-icon" />
-		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-hover.min.css" />
-		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-base.min.css" />
-		<link rel="stylesheet" href="../dist/css/mobile-angular-ui-desktop.min.css" />
+		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>../dist/css/mobile-angular-ui-hover.min.css" />
+		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>../dist/css/mobile-angular-ui-base.min.css" />
+		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>../dist/css/mobile-angular-ui-desktop.min.css" />
 		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/app.css" />
 		<link rel="stylesheet" href="<?=$FundControl->getHomeUrl()?>styles/style.css" />
 
@@ -32,7 +32,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
-		<script src="../dist/js/mobile-angular-ui.min.js"></script>
+		<script src="<?=$FundControl->getHomeUrl()?>../dist/js/mobile-angular-ui.min.js"></script>
 		<?
 		$JavascriptAutoloader
 			->setHomeUrl($FundControl->getHomeUrl())
@@ -48,9 +48,9 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 	<body ng-app="FundControlApp" ng-controller="MainController">
 
 		<!-- Sidebars -->
-		<div ng-include="'views/bars/sidebar.php'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
+		<div ng-include="'<?=$FundControl->getHomeUrl()?>views/bars/sidebar.php'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
 
-		<div ng-include="'views/bars/sidebarRight.php'" class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar"></div>
+		<div ng-include="'<?=$FundControl->getHomeUrl()?>views/bars/sidebarRight.php'" class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar"></div>
 
 		<div class="app">
 			<!-- Top Navbar -->
