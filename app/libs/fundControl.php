@@ -14,6 +14,8 @@ class FundControl {
 
 	private $data;
 
+	private $errors = array();
+
 	/**
 	 * @param string $homeUrl
 	 * @param string $rootDir
@@ -136,7 +138,6 @@ class FundControl {
 	public function getItemTypes($force = false) {
 		if(!isset($this->itemTypes) || $force) {
 			$this->itemTypes = array();
-			$this->itemTypes[0] = '== Choose type ==';
 
 			$res = $this->Db->query("SELECT id, name FROM `" . Setup::PREFIX . "item_types` ORDER BY name");
 			while ($row = $this->Db->fetchAssoc($res)) {
@@ -150,8 +151,30 @@ class FundControl {
 
 	public function saveItemForm() {
 		$this
+			->validateNewItemType()
 			->prepareAndSaveNewType()
-			->prepareAndSaveItem();
+			->validateNewItem()
+			->prepareAndSaveItem()
+			->printSaveItemResponse();
+	}
+
+	private function validateNewItemType() {
+		$itemTypeIdEmpty = empty($this->data['itemType']['id']);
+		$otherSelected = (!$itemTypeIdEmpty && (int)$this->data['itemType']['id'] === self::OTHER_TYPE_ID);
+		$newTypeNameEmpty = empty($this->data['newTypeName']);
+
+		if (($itemTypeIdEmpty || $otherSelected) && $newTypeNameEmpty) {
+			$this->errors[] = 'New type name is needed!';
+		}
+
+		$this->checkErrors();
+		return $this;
+	}
+
+	private function checkErrors() {
+		if (!empty($this->errors)) {
+			$this->printSaveItemResponse();
+		}
 	}
 
 	private function prepareAndSaveNewType() {
@@ -163,6 +186,18 @@ class FundControl {
 
 			$this->flashSuccess('New type was added.');
 		}
+		return $this;
+	}
+
+	private function validateNewItem() {
+		if (empty($this->data['name'])) {
+			$this->errors[] = 'Empty item name!';
+		}
+		if (empty($this->data['amount'])) {
+			$this->errors[] = 'Empty item amount!';
+		}
+
+		$this->checkErrors();
 		return $this;
 	}
 
@@ -201,6 +236,16 @@ class FundControl {
 		return $this;
 	}
 
+	private function printSaveItemResponse() {
+		foreach($this->errors as $error) {
+			$this->flashError($error);
+		}
+		$response = array(
+			'status' => (empty($this->errors) ? 'OK' : 'error'),
+		);
+		$this->printAsJsonAndDie($response);
+	}
+
 	public function logout() {
 		$this->Session->logout();
 		$this
@@ -237,5 +282,14 @@ class FundControl {
 		}
 
 		return $items;
+	}
+
+	public function requireLogin() {
+		if (!$this->isLogged()) {
+			$this
+				->flashError('This page need login!')
+				->view('flashesServer');
+			exit;
+		}
 	}
 }

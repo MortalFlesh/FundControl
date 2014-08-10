@@ -2,9 +2,11 @@
 $rootDir = __DIR__ . '/../../';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
+
+$FundControl->requireLogin();
 ?>
 <div content-for="title">
-	<span><?=$FundControl->getTitle()?> / User Info</span>
+	<span>User Info</span>
 </div>
 
 <div class="scrollable">

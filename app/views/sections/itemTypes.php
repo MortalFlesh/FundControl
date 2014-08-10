@@ -2,9 +2,11 @@
 $rootDir = __DIR__ . '/../../';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
+
+$FundControl->requireLogin();
 ?>
 <div content-for="title">
-	<span><?=$FundControl->getTitle()?> / Item Types</span>
+	<span>Item Types</span>
 </div>
 
 <input type="search" class="form-control app-search" placeholder="Search.." ng-model="searchItemType" />

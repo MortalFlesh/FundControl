@@ -23,17 +23,21 @@ app.controller('newItemController', ['$rootScope', '$scope', '$http', function($
 
 		$http({
 			method: 'POST',
-			url: 'api.php',
+			url: homeUrl + 'api.php',
 			data: {
 				action: 'save-new-item',
 				data : $scope.addingItem,
 			},
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
-		.success($scope.clearForm)
-		.success($scope.loadItemTypes)
-		.success($scope.loadItems)
-		.finally(function(){
+		.success(function(response) {
+			if (response.status === 'OK') {
+				$scope.clearForm();
+				$scope.loadItems();
+			}
+			$scope.loadItemTypes();
+		})
+		.finally(function() {
 			$rootScope.loading = false;
 			$scope.loadFlashes();
 		});

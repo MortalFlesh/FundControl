@@ -1,14 +1,3 @@
-Item detail
--> viz http://angular-ui.github.io/bootstrap/ - zobrazeni vsech udaju po rozjeti dolu
-
-ItemType detail
-- zobrazeni itemu toho typu pod tim + moznost rozjeti itemu
-
-Items v db
-- udelat, aby se ukladaly data zvlast, kvuli pripadnym zmenam v ukladani (aby se nemusely menit data)
-- pri nacitani pak udelat arrayToJson($row);
-	-> new Item() -> serialize()
-
 Refaktorovat FundControl
 
 JavascriptAutoloader

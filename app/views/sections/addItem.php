@@ -3,10 +3,12 @@ $rootDir = __DIR__ . '/../../';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
 
+$FundControl->requireLogin();
+
 $Render = new FundFormRender();
 ?>
 <div content-for="title">
-	<span><?=$FundControl->getTitle()?> / Add Item</span>
+	<span>Add Item</span>
 </div>
 
 <div id="add-item" class="scrollable">
@@ -29,7 +31,7 @@ $Render = new FundFormRender();
 						?>
 						<div ng-show="addingItem.addNewItem">
 							<?
-							$Render->renderTextModel('addingItem.newTypeName', 'New Type', 'newItemType', 'New item type name');
+							$Render->renderTextModel('addingItem.newTypeName', 'New', 'newItemType', 'New item type name');
 							?>
 						</div>
 						<?
