@@ -8,14 +8,14 @@ require_once $rootDir . 'core/fundControlApp.php';
 <div class="scrollable sidebar-scrollable">
 	<div class="scrollable-content">
 		<div class="list-group" toggle="off" bubble target="mainSidebar">
-			<a class="list-group-item" href="#/">Home <i class="fa fa-chevron-right pull-right"></i></a>
+			<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/">Home <i class="fa fa-chevron-right pull-right"></i></a>
 			<?
 			if ($FundControl->isLogged()) {
 				?>
-				<a class="list-group-item" href="#/addItem">Add Item <i class="fa fa-chevron-right pull-right"></i></a>
-				<a class="list-group-item" href="#/userInfo">User Info <i class="fa fa-chevron-right pull-right"></i></a>
-				<a class="list-group-item" href="#/items">Items <i class="fa fa-chevron-right pull-right"></i></a>
-				<a class="list-group-item" href="#/itemTypes">Item Types <i class="fa fa-chevron-right pull-right"></i></a>
+			<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/addItem">Add Item <i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/userInfo">User Info <i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/items">Items <i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/itemTypes">Item Types <i class="fa fa-chevron-right pull-right"></i></a>
 				<?
 			}
 			?>

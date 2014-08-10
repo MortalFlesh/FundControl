@@ -6,9 +6,9 @@ var app = angular.module('FundControlApp', [
 ]);
 
 app.config(function($routeProvider, $locationProvider) {
-	$routeProvider.when('/', {templateUrl: "views/sections/home.php"});
-	$routeProvider.when('/addItem', {templateUrl: "views/sections/addItem.php"});
-	$routeProvider.when('/userInfo', {templateUrl: "views/sections/userInfo.php"});
-	$routeProvider.when('/items', {templateUrl: "views/sections/items.php"});
-	$routeProvider.when('/itemTypes', {templateUrl: "views/sections/itemTypes.php"});
+	$routeProvider.when('/', {templateUrl: homeUrl + "views/sections/home.php"});
+	$routeProvider.when('/addItem', {templateUrl: homeUrl + "views/sections/addItem.php"});
+	$routeProvider.when('/userInfo', {templateUrl: homeUrl + "views/sections/userInfo.php"});
+	$routeProvider.when('/items', {templateUrl: homeUrl + "views/sections/items.php"});
+	$routeProvider.when('/itemTypes', {templateUrl: homeUrl + "views/sections/itemTypes.php"});
 });

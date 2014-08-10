@@ -10,7 +10,7 @@ app.controller('MainController', function($rootScope, $scope, $timeout,
 	});
 
 	$scope.logout = function() {
-		window.location.href = '?logout';
+		window.location.href = homeUrl + '?logout';
 	};
 
 	$scope.loadFlashes = function() {
