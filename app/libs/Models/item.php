@@ -7,19 +7,25 @@ class Item {
 	private $Type;
 
 	private $amount;
-	private $createdTime;
+
+	/** @var \DateTime */
+	private $CreatedTime;
 
 	/**
 	 * @param string $name
 	 * @param ItemType $Type
 	 * @param string $amount
-	 * @param string $createdTime
+	 * @param \DateTime $CreatedTime
 	 */
-	public function __construct($name, ItemType $Type, $amount, $createdTime) {
+	public function __construct($name, ItemType $Type, $amount, \DateTime $CreatedTime) {
 		$this->name = $name;
 		$this->Type = $Type;
 		$this->amount = $amount;
-		$this->createdTime = $createdTime;
+		$this->CreatedTime = $CreatedTime;
+	}
+
+	public function getCreatedTime() {
+		return $this->CreatedTime;
 	}
 
 	public function serialize() {
@@ -27,7 +33,6 @@ class Item {
 			'name' => $this->name,
 			'itemType' => $this->Type->serialize(),
 			'amount' => $this->amount,
-			'createdTime' => $this->createdTime,
 		);
 
 		return ArrayFunctions::arrayToJson($data);

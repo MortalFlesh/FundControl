@@ -10,6 +10,7 @@ class Config {
 			'encoding' => 'utf8'
 		),
 		'homeUrl' => 'http://fundcontrol/app/',
+		'htmlTitle' => 'FundControl',
 		'debug' => false,
 	);
 
@@ -23,5 +24,9 @@ class Config {
 
 	public function isDebug() {
 		return ($this->config['debug'] === true);
+	}
+
+	public function getHtmlTitle() {
+		return $this->config['htmlTitle'];
 	}
 }

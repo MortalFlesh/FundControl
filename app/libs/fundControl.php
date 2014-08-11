@@ -1,10 +1,7 @@
 <?php
 
 class FundControl {
-	const OTHER_TYPE_ID = -1;
-
-	private $rootDir, $homeUrl, $itemTypes, $htmlTitle;
-	private $newItemTypeId;
+	private $rootDir, $homeUrl, $htmlTitle;
 
 	/** @var Database */
 	private $Db;
@@ -12,37 +9,43 @@ class FundControl {
 	/** @var FundSession */
 	private $Session;
 
-	private $data;
-
-	private $errors = array();
+	private $data = array();
 
 	/**
+	 * @param string $htmlTitle
 	 * @param string $homeUrl
 	 * @param string $rootDir
 	 * @param Database $Db
 	 * @param FundSession $Session
 	 */
-	public function __construct($homeUrl, $rootDir, Database $Db, FundSession $Session) {
+	public function __construct($htmlTitle, $homeUrl, $rootDir, Database $Db, FundSession $Session) {
 		$this->homeUrl = $homeUrl;
 		$this->rootDir = $rootDir;
 		$this->Db = $Db;
 		$this->Session = $Session;
 
-		$this->htmlTitle = 'FundControl';
+		$this->htmlTitle = $htmlTitle;
 	}
 
+	/** @return string */
 	public function getHomeUrl() {
 		return $this->homeUrl;
 	}
 
+	/** @return string */
 	public function getTitle() {
 		return $this->htmlTitle;
 	}
 
+	/** @return bool */
 	public function isLogged() {
 		return $this->Session->isLogged();
 	}
 
+	/**
+	 * @param string $viewName
+	 * @return FundControl
+	 */
 	public function view($viewName) {
 		$viewFullName = $this->getInlineViewFullName($viewName);
 
@@ -54,6 +57,10 @@ class FundControl {
 		return $this;
 	}
 
+	/**
+	 * @param string$viewName
+	 * @return string
+	 */
 	private function getInlineViewFullName($viewName) {
 		return $this->rootDir . 'views/inline/' . $viewName . '.php';
 	}
@@ -68,7 +75,7 @@ class FundControl {
 			$userId = $this->Db->queryValue("SELECT id
 				FROM `" . Setup::PREFIX . "users`
 				WHERE
-					login = '" . $this->clear($this->data['login']) . "'
+					login = '" . $this->Db->escape($this->data['login']) . "'
 					AND password = '" . $this->crypt($this->data['password']) . "'");
 
 			$userId;
@@ -86,19 +93,23 @@ class FundControl {
 		$this->reload();
 	}
 
-	private function clear($string) {
-		return $this->Db->escape($string);
-	}
-
 	private function crypt($password) {
 		return crypt($password, 'MF' . md5($password));
 	}
 
+	/**
+	 * @param string $message
+	 * @return FundControl
+	 */
 	public function flashError($message) {
 		$this->Session->addFlash(new FlashMessage($message, FlashMessage::ERROR));
 		return $this;
 	}
 
+	/**
+	 * @param string $message
+	 * @return FundControl
+	 */
 	public function flashSuccess($message) {
 		$this->Session->addFlash(new FlashMessage($message, FlashMessage::SUCCESS));
 		return $this;
@@ -117,7 +128,7 @@ class FundControl {
 		} else {
 			$qry = "INSERT INTO `" . Setup::PREFIX . "users` (`login`, `password`)
 				VALUES (
-					'" . $this->clear($login) . "',
+					'" . $this->Db->escape($login) . "',
 					'" . $this->crypt($password) . "')";
 			$this->Db->query($qry);
 
@@ -126,126 +137,17 @@ class FundControl {
 		$this->reload();
 	}
 
+	/**
+	 * Redirect to home URL
+	 */
 	public function reload() {
 		header('Location: ' . $this->homeUrl);
 		exit;
 	}
 
 	/**
-	 * @param bool $force
-	 * @return array
+	 * Logout current user
 	 */
-	public function getItemTypes($force = false) {
-		if(!isset($this->itemTypes) || $force) {
-			$this->itemTypes = array();
-
-			$res = $this->Db->query("SELECT id, name FROM `" . Setup::PREFIX . "item_types` ORDER BY name");
-			while ($row = $this->Db->fetchAssoc($res)) {
-				$this->itemTypes[(int)$row['id']] = $row['name'];
-			}
-
-			$this->itemTypes[self::OTHER_TYPE_ID] = 'Other';
-		}
-		return $this->itemTypes;
-	}
-
-	public function saveItemForm() {
-		$this
-			->validateNewItemType()
-			->prepareAndSaveNewType()
-			->validateNewItem()
-			->prepareAndSaveItem()
-			->printSaveItemResponse();
-	}
-
-	private function validateNewItemType() {
-		$itemTypeIdEmpty = empty($this->data['itemType']['id']);
-		$otherSelected = (!$itemTypeIdEmpty && (int)$this->data['itemType']['id'] === self::OTHER_TYPE_ID);
-		$newTypeNameEmpty = empty($this->data['newTypeName']);
-
-		if (($itemTypeIdEmpty || $otherSelected) && $newTypeNameEmpty) {
-			$this->errors[] = 'New type name is needed!';
-		}
-
-		$this->checkErrors();
-		return $this;
-	}
-
-	private function checkErrors() {
-		if (!empty($this->errors)) {
-			$this->printSaveItemResponse();
-		}
-	}
-
-	private function prepareAndSaveNewType() {
-		if (!empty($this->data['newTypeName'])) {
-			$this->Db->query("INSERT INTO `" . Setup::PREFIX . "item_types` (`name`) VALUES
-				('" . $this->clear($this->data['newTypeName']) . "')");
-
-			$this->newItemTypeId = $this->Db->lastInsertedId();
-
-			$this->flashSuccess('New type was added.');
-		}
-		return $this;
-	}
-
-	private function validateNewItem() {
-		if (empty($this->data['name'])) {
-			$this->errors[] = 'Empty item name!';
-		}
-		if (empty($this->data['amount'])) {
-			$this->errors[] = 'Empty item amount!';
-		}
-
-		$this->checkErrors();
-		return $this;
-	}
-
-	private function prepareAndSaveItem() {
-		$itemTypes = $this->getItemTypes(true);
-		$Time = new DateTime();
-		$formatedTime = $Time->format(Database::TIME_FORMAT);
-		$typeId = (int)$this->data['itemType']['id'];
-
-		if ($typeId === self::OTHER_TYPE_ID && !empty($this->newItemTypeId)) {
-			$type = $this->data['newTypeName'];
-			$typeId = $this->newItemTypeId;
-		} else {
-			$type = $itemTypes[$typeId];
-		}
-
-		$Item = new Item(
-			$this->clear($this->data['name']),
-			new ItemType($typeId, $type),
-			$this->clear($this->data['amount']),
-			$formatedTime
-		);
-
-		$this->saveItem($Item, $formatedTime);
-		return $this;
-	}
-
-	private function saveItem(Item $Item, $time) {
-		$userId = $this->Session->getUserId();
-		$itemData = $Item->serialize();
-
-		$this->Db->query("INSERT INTO `" . Setup::PREFIX . "items` (`user_id`, `item_data`, `time`) VALUES
-			('" . (int)$userId . "', '" . $itemData . "', '" . $time . "')");
-
-		$this->flashSuccess('Item added.');
-		return $this;
-	}
-
-	private function printSaveItemResponse() {
-		foreach($this->errors as $error) {
-			$this->flashError($error);
-		}
-		$response = array(
-			'status' => (empty($this->errors) ? 'OK' : 'error'),
-		);
-		$this->printAsJsonAndDie($response);
-	}
-
 	public function logout() {
 		$this->Session->logout();
 		$this
@@ -253,37 +155,15 @@ class FundControl {
 			->reload();
 	}
 
+	/** @param array $data */
 	public function printAsJsonAndDie(array $data) {
 		echo ArrayFunctions::arrayToJson($data);
 		exit;
 	}
 
-	public function getItems() {
-		$items = array();
-
-		$res = $this->Db->query("SELECT `id`, `item_data`
-			FROM `" . Setup::PREFIX . "items`
-			WHERE user_id = " . $this->Session->getUserId());
-
-		while($row = $this->Db->fetchAssoc($res)) {
-			$itemData = json_decode($row['item_data'], true);
-
-			$Item = new Item(
-				$itemData['name'],
-				new ItemType(
-					$itemData['itemType']['id'],
-					$itemData['itemType']['name']
-				),
-				$itemData['amount'],
-				$row['time']
-			);
-
-			$items[$row['id']] = $Item->serialize();
-		}
-
-		return $items;
-	}
-
+	/**
+	 * If user is not logged, this will kill the script and show error message
+	 */
 	public function requireLogin() {
 		if (!$this->isLogged()) {
 			$this
@@ -291,5 +171,10 @@ class FundControl {
 				->view('flashesServer');
 			exit;
 		}
+	}
+
+	/** @return int */
+	public function getUserId() {
+		return $this->Session->getUserId();
 	}
 }

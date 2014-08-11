@@ -10,8 +10,8 @@ app.factory('ItemTypes', function(ItemType){
 	ItemTypes.build = function(data) {
 		var itemTypes = [];
 		
-		angular.forEach(data, function(name, id){
-			var Type = ItemType.build({name:name, id:id});
+		angular.forEach(data, function(itemTypeData){
+			var Type = ItemType.build({name:itemTypeData.name, id:itemTypeData.id});
 			itemTypes.push(Type);
 		});
 

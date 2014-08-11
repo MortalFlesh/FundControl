@@ -1,6 +1,8 @@
 <?php
 
 class ItemType {
+	const OTHER_TYPE_ID = -1;
+
 	private $id;
 	private $name;
 

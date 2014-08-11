@@ -35,7 +35,7 @@ class ServiceFactory {
 		$Db = $this->getServiceByName('Database');
 		$Session = $this->getServiceByName('FundSession');
 
-		return new FundControl($Config->getHomeUrl(), $this->rootDir, $Db, $Session);
+		return new FundControl($Config->getHtmlTitle(), $Config->getHomeUrl(), $this->rootDir, $Db, $Session);
 	}
 
 	/**

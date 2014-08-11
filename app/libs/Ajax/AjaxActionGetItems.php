@@ -4,8 +4,16 @@ class AjaxActionGetItems implements IAjaxAction {
 	/** @var FundControl */
 	private $FundControl;
 
-	public function __construct(FundControl $FundControl) {
+	/** @var ItemsService */
+	private $ItemsService;
+
+	/**
+	 * @param FundControl $FundControl
+	 * @param ItemsService $ItemsService
+	 */
+	public function __construct(FundControl $FundControl, ItemsService $ItemsService) {
 		$this->FundControl = $FundControl;
+		$this->ItemsService = $ItemsService;
 	}
 
 	public function assignData($data) {
@@ -13,7 +21,9 @@ class AjaxActionGetItems implements IAjaxAction {
 	}
 
 	public function run() {
-		$items = $this->FundControl->getItems();
-		$this->FundControl->printAsJsonAndDie($items);
+		$userId = $this->FundControl->getUserId();
+		$items = $this->ItemsService->getItems($userId);
+		$serializedItems = $this->ItemsService->serializeItems($items);
+		$this->FundControl->printAsJsonAndDie($serializedItems);
 	}
 }
