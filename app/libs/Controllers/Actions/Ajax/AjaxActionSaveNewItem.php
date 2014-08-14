@@ -7,8 +7,8 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	/** @var FlashMessagesFacade */
 	private $Flashes;
 
-	/** @var FundControl */
-	private $FundControl;
+	/** @var UserAuthorizeFacade */
+	private $Authorize;
 
 	/** @var ItemsService */
 	private $ItemService;
@@ -16,10 +16,10 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	private $data = array();
 	private $status;
 
-	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, FundControl $FundControl, ItemsService $ItemService) {
+	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, UserAuthorizeFacade $Authorize, ItemsService $ItemService) {
 		$this->JsonPrinter = $JsonPrinter;
 		$this->Flashes = $Flashes;
-		$this->FundControl = $FundControl;
+		$this->Authorize = $Authorize;
 		$this->ItemService = $ItemService;
 	}
 
@@ -29,11 +29,18 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	}
 
 	public function run() {
-		$userId = $this->FundControl->getUserId();
-		$this->trySaveForm($userId);
+		if ($this->Authorize->isLogged()) {
+			$userId = $this->Authorize->getUserId();
+			$this->trySaveForm($userId);
+		} else {
+			$this->Flashes->flashError('Login required!');
+			$this->status = 'error';
+		}
+
 		$this->JsonPrinter->printAsJsonAndDie(array('status' => $this->status));
 	}
 
+	/** @param int $userId */
 	private function trySaveForm($userId) {
 		try {
 			$messages = $this->ItemService

@@ -14,28 +14,21 @@ class ServiceFactory {
 		return $this;
 	}
 
+	/** @return Config */
+	private function getConfig() {
+		return new Config($this->rootDir);
+	}
+
 	/** @return LogWriter */
 	private function getLogWriter() {
-		$Config = $this->getServiceByName('Config');
-		/* @var $Config Config */
+		$Config = $this->getConfig();
 
 		$LogWriter = new LogWriter(
-			$this->rootDir. 'logs/log.log',
+			$Config->getRootDir() . 'logs/log.log',
 			10024000,
 			($Config->isDebug() ? LogWriter::ENABLED : LogWriter::DISABLED)
 		);
 		return $LogWriter;
-	}
-
-	/** @return FundControl */
-	private function getFundControl() {
-		$Config = $this->getServiceByName('Config');
-		/* @var $Config Config */
-
-		$Db = $this->getServiceByName('Database');
-		$Session = $this->getServiceByName('FundSession');
-
-		return new FundControl($Config->getHtmlTitle(), $Config->getHomeUrl(), $this->rootDir, $Db, $Session);
 	}
 
 	/**

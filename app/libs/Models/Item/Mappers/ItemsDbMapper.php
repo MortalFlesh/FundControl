@@ -32,7 +32,7 @@ class ItemsDbMapper implements ItemsMapper {
 	public function getItems($userId) {
 		$items = array();
 
-		$res = $this->Db->query("SELECT `id`, `item_data`
+		$res = $this->Db->query("SELECT `id`, `item_data`, `time`
 			FROM `" . Setup::PREFIX . "items`
 			WHERE user_id = " . (int)$userId);
 
@@ -46,7 +46,7 @@ class ItemsDbMapper implements ItemsMapper {
 					$itemData['itemType']['name']
 				),
 				$itemData['amount'],
-				\DateTime::createFromFormat(Database::TIME_FORMAT, $itemData['createdTime'])
+				\DateTime::createFromFormat(Database::TIME_FORMAT, $row['time'])
 			);
 
 			$items[$row['id']] = $Item;

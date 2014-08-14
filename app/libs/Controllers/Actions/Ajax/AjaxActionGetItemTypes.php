@@ -10,11 +10,8 @@ class AjaxActionGetItemTypes implements IAjaxAction {
 	/** @var ItemTypesService */
 	private $ItemTypesService;
 
-	/**
-	 * @param FundControl $FundControl
-	 * @param ItemTypesService $ItemTypesService
-	 */
-	public function __construct(FundControl $FundControl, ItemTypesService $ItemTypesService) {
+	public function __construct(JsonPrinter $JsonPrinter, FundControl $FundControl, ItemTypesService $ItemTypesService) {
+		$this->JsonPrinter = $JsonPrinter;
 		$this->FundControl = $FundControl;
 		$this->ItemTypesService = $ItemTypesService;
 	}

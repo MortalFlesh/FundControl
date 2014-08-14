@@ -5,6 +5,12 @@ MainController -> ActionsFactory -> getAction (jako u ajaxu)
 
 Action by mela vracet view()
 	-> a to by melo pouzivat svuj model?
+	-> nebo spis by kazdy controller mel resit po svem co udelat
+		-> main -> reload()
+		-> ajax -> printJson (tzn. controller by mel byt zavisly na JsonPrinetru, a IAjaxActions by mely mit metodu getJson()
+			-> IAjaxAction->assignData()->run()->getResponse();
+
+Setup::PREFIX -> Config->getTablePrefix()
 
 ===============================
 
@@ -22,3 +28,8 @@ $JavascriptAutoloader
 
 - pridavani konretnich souboru (kvuli poradi)
 - priani hashovani pro scripty pri vytvareni cache - fileName = MD5({directoryName}_{recursively[1|0]} => compiledCacheName = fileNames.implode('|').md5()
+
+===============================
+
+Add new Item / js
+success -> clear form/fix
