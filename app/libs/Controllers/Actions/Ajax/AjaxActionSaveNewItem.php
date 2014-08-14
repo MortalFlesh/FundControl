@@ -34,7 +34,7 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 			$this->trySaveForm($userId);
 		} else {
 			$this->Flashes->flashError('Login required!');
-			$this->status = 'error';
+			$this->status = self::STATUS_ERROR;
 		}
 
 		$this->JsonPrinter->printAsJsonAndDie(array('status' => $this->status));
@@ -51,9 +51,9 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 				$this->Flashes->flashSuccess($message);
 			}
 
-			$this->status = 'ok';
+			$this->status = self::STATUS_OK;
 		} catch (SaveNewItemException $Exception) {
-			$this->status = 'error';
+			$this->status = self::STATUS_ERROR;
 			$this->Flashes->flashError($Exception->getMessage());
 		}
 	}

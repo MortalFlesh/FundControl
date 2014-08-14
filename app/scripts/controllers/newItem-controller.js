@@ -7,6 +7,7 @@ app.controller('newItemController', ['$rootScope', '$scope', '$http', function($
 		amount: '',
 	};
 
+	$scope.newItemForm = {};
 	$scope.addingItem = defaultAddingItem;
 	
 	$scope.newItemTypeCheck = function() {
