@@ -1,17 +1,17 @@
 <?
 
 class AjaxActionGetItems implements IAjaxAction {
+	/** @var JsonPrinter */
+	private $JsonPrinter;
+
 	/** @var FundControl */
 	private $FundControl;
 
 	/** @var ItemsService */
 	private $ItemsService;
 
-	/**
-	 * @param FundControl $FundControl
-	 * @param ItemsService $ItemsService
-	 */
-	public function __construct(FundControl $FundControl, ItemsService $ItemsService) {
+	public function __construct(JsonPrinter $JsonPrinter, FundControl $FundControl, ItemsService $ItemsService) {
+		$this->JsonPrinter = $JsonPrinter;
 		$this->FundControl = $FundControl;
 		$this->ItemsService = $ItemsService;
 	}
@@ -24,6 +24,6 @@ class AjaxActionGetItems implements IAjaxAction {
 		$userId = $this->FundControl->getUserId();
 		$items = $this->ItemsService->getItems($userId);
 		$serializedItems = $this->ItemsService->serializeItems($items);
-		$this->FundControl->printAsJsonAndDie($serializedItems);
+		$this->JsonPrinter->printAsJsonAndDie($serializedItems);
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 /* @var $FundControl FundControl */
 
-$flashes = $FundControl->getFlashesAndClear();
+$flashes = $FundControl->getFlashes();
 ?>
 <div id="flash-container">
 	<?

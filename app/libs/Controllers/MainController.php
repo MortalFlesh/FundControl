@@ -1,6 +1,9 @@
 <?php
 
 class MainController implements IController {
+	/** @var FlashMessagesFacade */
+	private $Flashes;
+
 	/** @var FundControl */
 	private $FundControl;
 
@@ -30,12 +33,11 @@ class MainController implements IController {
 		} elseif (isset($_GET['setup']) && $_GET['setup'] == 'fejkA8Dwas7ADW7A88') {
 			$this->Setup->install();
 
-			$this->FundControl
-				->flashSuccess('Installed')
-				->reload();
+			$this->Flashes->flashSuccess('Installed');
+			$this->FundControl->reload();
 		} elseif (isset($_GET['info']) && $_GET['info'] == 'afej8183fakkjfa') {
 		} elseif (isset($_GET['message'])) {
-			$this->FundControl->flashSuccess($_GET['message']);
+			$this->Flashes->flashSuccess($_GET['message']);
 			exit;
 		}
 	}

@@ -1,6 +1,12 @@
 <?
 
 class AjaxActionSaveNewItem implements IAjaxAction {
+	/** @var JsonPrinter */
+	private $JsonPrinter;
+
+	/** @var FlashMessagesFacade */
+	private $Flashes;
+
 	/** @var FundControl */
 	private $FundControl;
 
@@ -10,7 +16,9 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	private $data = array();
 	private $status;
 
-	public function __construct(FundControl $FundControl, ItemsService $ItemService) {
+	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, FundControl $FundControl, ItemsService $ItemService) {
+		$this->JsonPrinter = $JsonPrinter;
+		$this->Flashes = $Flashes;
 		$this->FundControl = $FundControl;
 		$this->ItemService = $ItemService;
 	}
@@ -23,7 +31,7 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	public function run() {
 		$userId = $this->FundControl->getUserId();
 		$this->trySaveForm($userId);
-		$this->FundControl->printAsJsonAndDie(array('status' => $this->status));
+		$this->JsonPrinter->printAsJsonAndDie(array('status' => $this->status));
 	}
 
 	private function trySaveForm($userId) {
@@ -33,13 +41,13 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 				->getMessagesAndClear();
 
 			foreach($messages as $message) {
-				$this->FundControl->flashSuccess($message);
+				$this->Flashes->flashSuccess($message);
 			}
 
 			$this->status = 'ok';
 		} catch (SaveNewItemException $Exception) {
 			$this->status = 'error';
-			$this->FundControl->flashError($Exception->getMessage());
+			$this->Flashes->flashError($Exception->getMessage());
 		}
 	}
 

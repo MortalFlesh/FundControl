@@ -20,7 +20,7 @@ class FlashMessage {
 		return $this->message;
 	}
 	
-	public function toArray() {
+	public function serialize() {
 		return array(
 			'message' => $this->getMessage(),
 			'type' => $this->getType(),

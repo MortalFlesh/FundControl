@@ -9,6 +9,9 @@ class FundControl {
 	/** @var FundSession */
 	private $Session;
 
+	/** @var FlashMessagesFacade */
+	private $Flashes;
+
 	private $data = array();
 
 	/**
@@ -18,11 +21,12 @@ class FundControl {
 	 * @param Database $Db
 	 * @param FundSession $Session
 	 */
-	public function __construct($htmlTitle, $homeUrl, $rootDir, Database $Db, FundSession $Session) {
+	public function __construct($htmlTitle, $homeUrl, $rootDir, Database $Db, FundSession $Session, FlashMessagesFacade $Flashes) {
 		$this->homeUrl = $homeUrl;
 		$this->rootDir = $rootDir;
 		$this->Db = $Db;
 		$this->Session = $Session;
+		$this->Flashes = $Flashes;
 
 		$this->htmlTitle = $htmlTitle;
 	}
@@ -83,12 +87,12 @@ class FundControl {
 				$this->Session
 					->setUserId($userId)
 					->setIsLogged();
-				$this->flashSuccess('Successfuly logged in.');
+				$this->Flashes->flashSuccess('Successfuly logged in.');
 			} else {
-				$this->flashError('Invalid user data!');
+				$this->Flashes->flashError('Invalid user data!');
 			}
 		} else {
-			$this->flashError('Empty user data!');
+			$this->Flashes->flashError('Empty user data!');
 		}
 		$this->reload();
 	}
@@ -97,34 +101,14 @@ class FundControl {
 		return crypt($password, 'MF' . md5($password));
 	}
 
-	/**
-	 * @param string $message
-	 * @return FundControl
-	 */
-	public function flashError($message) {
-		$this->Session->addFlash(new FlashMessage($message, FlashMessage::ERROR));
-		return $this;
-	}
-
-	/**
-	 * @param string $message
-	 * @return FundControl
-	 */
-	public function flashSuccess($message) {
-		$this->Session->addFlash(new FlashMessage($message, FlashMessage::SUCCESS));
-		return $this;
-	}
-
 	/** @return FlashMessage[] */
-	public function getFlashesAndClear() {
-		$flashes = $this->Session->getFlashes();
-		$this->Session->clearFlashes();
-		return $flashes;
+	public function getFlashes() {
+		return $this->FlashMessagesRepository->getFlashes();
 	}
 
 	public function newUser($login, $password) {
 		if (empty($login) || empty($password)) {
-			$this->flashError('Empty user data!');
+			$this->Flashes->flashError('Empty user data!');
 		} else {
 			$qry = "INSERT INTO `" . Setup::PREFIX . "users` (`login`, `password`)
 				VALUES (
@@ -132,7 +116,7 @@ class FundControl {
 					'" . $this->crypt($password) . "')";
 			$this->Db->query($qry);
 
-			$this->flashSuccess('User inserted!');
+			$this->Flashes->flashSuccess('User inserted!');
 		}
 		$this->reload();
 	}
@@ -150,15 +134,8 @@ class FundControl {
 	 */
 	public function logout() {
 		$this->Session->logout();
-		$this
-			->flashSuccess('You are no longer logged!')
-			->reload();
-	}
-
-	/** @param array $data */
-	public function printAsJsonAndDie(array $data) {
-		echo ArrayFunctions::arrayToJson($data);
-		exit;
+		$this->Flashes->flashSuccess('You are no longer logged!');
+		$this->reload();
 	}
 
 	/**
@@ -166,9 +143,8 @@ class FundControl {
 	 */
 	public function requireLogin() {
 		if (!$this->isLogged()) {
-			$this
-				->flashError('This page need login!')
-				->view('flashesServer');
+			$this->Flashes->flashError('This page need login!');
+			$this->view('flashesServer');
 			exit;
 		}
 	}

@@ -1,6 +1,9 @@
 <?
 
 class AjaxActionGetItemTypes implements IAjaxAction {
+	/** @var JsonPrinter */
+	private $JsonPrinter;
+
 	/** @var FundControl */
 	private $FundControl;
 
@@ -23,6 +26,6 @@ class AjaxActionGetItemTypes implements IAjaxAction {
 	public function run() {
 		$types = $this->ItemTypesService->getItemTypes();
 		$serializedTypes = $this->ItemTypesService->serializeItemTypes($types);
-		$this->FundControl->printAsJsonAndDie($serializedTypes);
+		$this->JsonPrinter->printAsJsonAndDie($serializedTypes);
 	}
 }

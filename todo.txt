@@ -1,4 +1,12 @@
 Refaktorovat FundControl
+itemService -> Facade
+Authorize -> model
+MainController -> ActionsFactory -> getAction (jako u ajaxu)
+
+Action by mela vracet view()
+	-> a to by melo pouzivat svuj model?
+
+===============================
 
 JavascriptAutoloader
 
