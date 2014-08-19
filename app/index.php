@@ -6,7 +6,7 @@ require_once $rootDir . 'core/fundControlApp.php';
 $JavascriptAutoloader = new JavascriptAutoloader();
 ?>
 <!doctype html>
-<html lang="cs">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<base href="/app/" />
