@@ -1,17 +1,19 @@
 <?php
 
 class Setup {
-	const PREFIX = 'fundcontrol_';
-
 	/** @var Database */
 	private $Db;
 
-	public function __construct(Database $Db) {
+	/** @var Config */
+	private $Config;
+
+	public function __construct(Database $Db, Config $Config) {
 		$this->Db = $Db;
+		$this->Config = $Config;
 	}
 
 	public function install() {
-		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . self::PREFIX . "items` (
+		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . $this->Config->getPrefix() . "items` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`user_id` int(11) NOT NULL,
 			`item_data` text NOT NULL,
@@ -19,13 +21,13 @@ class Setup {
 			PRIMARY KEY (`id`)
 		  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8");
 
-		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . self::PREFIX . "item_types` (
+		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . $this->Config->getPrefix() . "item_types` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`name` varchar(100) NOT NULL,
 			PRIMARY KEY (`id`)
 		  ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
-		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . self::PREFIX . "users` (
+		$this->Db->query("CREATE TABLE IF NOT EXISTS `" . $this->Config->getPrefix() . "users` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`login` varchar(100) NOT NULL,
 			`password` varchar(100) NOT NULL,

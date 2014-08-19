@@ -1,4 +1,3 @@
-Setup::PREFIX -> Config->getTablePrefix()
 Pridat zisk
 
 itemService -> Facade

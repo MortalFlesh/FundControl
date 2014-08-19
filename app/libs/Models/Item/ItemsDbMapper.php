@@ -5,9 +5,16 @@ class ItemsDbMapper implements ItemsMapper {
 	/** @var Database */
 	private $Db;
 
-	/** @param Database $Db */
-	public function __construct(Database $Db) {
+	/** @var Config */
+	private $Config;
+
+	/**
+	 * @param Database $Db
+	 * @param Config $Config
+	 */
+	public function __construct(Database $Db, Config $Config) {
 		$this->Db = $Db;
+		$this->Config = $Config;
 	}
 
 	/**
@@ -19,7 +26,7 @@ class ItemsDbMapper implements ItemsMapper {
 		$itemData = $Item->serialize();
 		$Time = $Item->getCreatedTime();
 
-		$this->Db->query("INSERT INTO `" . Setup::PREFIX . "items` (`user_id`, `item_data`, `time`) VALUES
+		$this->Db->query("INSERT INTO `" . $this->Config->getPrefix() . "items` (`user_id`, `item_data`, `time`) VALUES
 			('" . (int)$userId . "', '" . $this->Db->escape($itemData) . "', '" . $Time->format(Database::TIME_FORMAT) . "')");
 
 		return $this;
@@ -33,7 +40,7 @@ class ItemsDbMapper implements ItemsMapper {
 		$items = [];
 
 		$res = $this->Db->query("SELECT `id`, `item_data`, `time`
-			FROM `" . Setup::PREFIX . "items`
+			FROM `" . $this->Config->getPrefix() . "items`
 			WHERE user_id = " . (int)$userId);
 
 		while($row = $this->Db->fetchAssoc($res)) {

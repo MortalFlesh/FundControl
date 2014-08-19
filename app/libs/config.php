@@ -7,7 +7,8 @@ class Config {
 			'user' => 'root',
 			'password' => '',
 			'database' => 'fundcontrol',
-			'encoding' => 'utf8'
+			'encoding' => 'utf8',
+			'prefix' => 'fundcontrol_',
 		),
 		'homeUrl' => 'http://fundcontrol/app/',
 		'htmlTitle' => 'FundControl',
@@ -23,6 +24,11 @@ class Config {
 	/** @return array */
 	public function getDbConfig() {
 		return $this->config['db'];
+	}
+
+	/** @return string */
+	public function getPrefix() {
+		return $this->config['db']['prefix'];
 	}
 
 	/** @return string */

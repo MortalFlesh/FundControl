@@ -6,9 +6,16 @@ class ItemTypesDbMapper implements ItemTypesMapper {
 
 	private $newItemTypeId;
 
-	/** @param Database $Db */
-	public function __construct(Database $Db) {
+	/** @var Config */
+	private $Config;
+
+	/**
+	 * @param Database $Db
+	 * @param Config $Config
+	 */
+	public function __construct(Database $Db, Config $Config) {
 		$this->Db = $Db;
+		$this->Config = $Config;
 	}
 
 	/**
@@ -16,7 +23,7 @@ class ItemTypesDbMapper implements ItemTypesMapper {
 	 * @return ItemTypesDbMapper
 	 */
 	public function saveNewItemType($itemTypeName) {
-		$this->Db->query("INSERT INTO `" . Setup::PREFIX . "item_types` (`name`) VALUES
+		$this->Db->query("INSERT INTO `" . $this->Config->getPrefix() . "item_types` (`name`) VALUES
 			('" . $this->Db->escape($itemTypeName) . "')");
 
 		$this->newItemTypeId = $this->Db->lastInsertedId();
@@ -33,7 +40,7 @@ class ItemTypesDbMapper implements ItemTypesMapper {
 	public function getItemTypes() {
 		$itemTypes = [];
 
-		$res = $this->Db->query("SELECT id, name FROM `" . Setup::PREFIX . "item_types` ORDER BY name");
+		$res = $this->Db->query("SELECT id, name FROM `" . $this->Config->getPrefix() . "item_types` ORDER BY name");
 		while ($row = $this->Db->fetchAssoc($res)) {
 			$itemTypes[(int)$row['id']] = new ItemType($row['id'], $row['name']);
 		}
