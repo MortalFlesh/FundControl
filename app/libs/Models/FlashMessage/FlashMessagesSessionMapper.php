@@ -25,7 +25,7 @@ class FlashMessagesSessionMapper {
 
 	/** @return FlashMessage[] */
 	public function getFlashes() {
-		$flashes = array();
+		$flashes = [];
 		if (is_array($this->session['flashes'])) {
 			foreach($this->session['flashes'] as $flashData) {
 				$flashes[] = new FlashMessage($flashData['message'], $flashData['type']);
@@ -36,7 +36,7 @@ class FlashMessagesSessionMapper {
 
 	/** @return FlashMessagesSessionMapper */
 	public function clearFlashes() {
-		$this->session['flashes'] = array();
+		$this->session['flashes'] = [];
 		return $this;
 	}
 }

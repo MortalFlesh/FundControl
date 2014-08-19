@@ -9,7 +9,7 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderTextFieldset($title, $name, $value = '', array $params = array()) {
+	public function renderTextFieldset($title, $name, $value = '', array $params = []) {
 		$this->renderInputWithFieldset('text', $title, $name, $value, $params);
 		return $this;
 	}
@@ -54,7 +54,7 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderPasswordFieldset($title, $name, $value = '', array $params = array()) {
+	public function renderPasswordFieldset($title, $name, $value = '', array $params = []) {
 		$this->renderInputWithFieldset('password', $title, $name, $value, $params);
 		return $this;
 	}
@@ -66,7 +66,7 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderNumberFieldset($title, $name, $value = '', array $params = array()) {
+	public function renderNumberFieldset($title, $name, $value = '', array $params = []) {
 		$this->renderInputWithFieldset('tel', $title, $name, $value, $params);
 		return $this;
 	}
@@ -78,7 +78,7 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderSelectFieldset($title, $name, array $values, array $params = array()) {
+	public function renderSelectFieldset($title, $name, array $values, array $params = []) {
 		?>
 		<fieldset class="input-for">
 			<legend class="input-for-title"><?=$title?></legend>
@@ -156,7 +156,7 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderTextModel($model, $title, $name, $placeHolder = '', $value = '', array $params = array()) {
+	public function renderTextModel($model, $title, $name, $placeHolder = '', $value = '', array $params = []) {
 		$this->renderInput('text', $name, $value, array(
 			'bs-form-control',
 			'ng-model="' . $model . '"',
@@ -219,8 +219,8 @@ class FundFormRender {
 	 * @param array $params
 	 * @return FundFormRender
 	 */
-	public function renderSelectModel($model, $title, $name, $options, $action = '', array $params = array()) {
-		$this->renderSelect($name, array(), array(
+	public function renderSelectModel($model, $title, $name, $options, $action = '', array $params = []) {
+		$this->renderSelect($name, [], array(
 			'bs-form-control',
 			'ng-model="' . $model . '"',
 			'label="' . $title . '"',

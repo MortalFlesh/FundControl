@@ -1,7 +1,7 @@
 <?php
 
 class AjaxController implements IController {
-	private $data = array();
+	private $data = [];
 
 	/** @var AjaxActionsFactory */
 	private $Factory;

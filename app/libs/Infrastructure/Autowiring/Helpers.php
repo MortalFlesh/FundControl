@@ -9,7 +9,7 @@ class Helpers {
 	 * @throws ReflectionException
 	 */
 	public static function autowireArguments(ReflectionFunctionAbstract $Constructor, ServiceFactory $ServiceFactory) {
-		$res = array();
+		$res = [];
 		foreach ($Constructor->getParameters() as $Parameter) {	/* @var $Parameter ReflectionParameter */
 			$className = $Parameter->getClass()->name;
 			$Service = $ServiceFactory->getServiceByName($className);

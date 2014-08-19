@@ -2,7 +2,7 @@
 
 class ServiceFactory {
 	private $rootDir;
-	private $servicesCache = array();
+	private $servicesCache = [];
 
 	/** @param string $rootDir */
 	public function __construct($rootDir) {

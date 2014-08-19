@@ -4,11 +4,11 @@ class JavascriptAutoloader {
 	private $rootDir;
 
 	/** @var JADirInfo[] */
-	private $directories = array();
+	private $directories = [];
 
 	private $homeUrl;
 
-	private $scripts = array();
+	private $scripts = [];
 
 	private $cacheAllowed = true;
 

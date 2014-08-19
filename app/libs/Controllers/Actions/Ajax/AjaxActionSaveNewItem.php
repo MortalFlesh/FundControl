@@ -13,7 +13,7 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	/** @var ItemsService */
 	private $ItemService;
 
-	private $data = array();
+	private $data = [];
 	private $status;
 
 	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, UserAuthorizeFacade $Authorize, ItemsService $ItemService) {

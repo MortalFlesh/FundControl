@@ -8,8 +8,8 @@ class ItemsService {
 	/** @var ItemTypesService */
 	private $ItemTypesService;
 
-	private $data = array();
-	private $messages = array();
+	private $data = [];
+	private $messages = [];
 	private $newItemTypeId, $userId;
 
 	/**
@@ -134,7 +134,7 @@ class ItemsService {
 	/** @return array */
 	public function getMessagesAndClear() {
 		$messages = $this->messages;
-		$this->messages = array();
+		$this->messages = [];
 		return $messages;
 	}
 
@@ -151,7 +151,7 @@ class ItemsService {
 	 * @return array
 	 */
 	public function serializeItems(array $items) {
-		$serializedItems = array();
+		$serializedItems = [];
 		foreach($items as $key => $Item) {
 			$serializedItems[$key] = $Item->serialize();
 		}

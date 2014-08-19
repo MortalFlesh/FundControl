@@ -36,7 +36,7 @@ class ItemTypesService {
 	 * @return array
 	 */
 	public function serializeItemTypes(array $itemTypes) {
-		$serializedTypes = array();
+		$serializedTypes = [];
 		foreach($itemTypes as $key => $Type) {
 			$serializedTypes[$key] = $Type->serialize();
 		}

@@ -7,7 +7,7 @@ class ArrayFunctions {
 
 	public static function initArray(&$array) {
 		if (!self::isArray($array)) {
-			$array = array();
+			$array = [];
 		}
 	}
 
@@ -16,7 +16,7 @@ class ArrayFunctions {
 	}
 
 	public static function arrayToJson(array $array) {
-		$jsonArray = array();
+		$jsonArray = [];
 		foreach($array as $id => $value) {
 			if (is_array($value)) {
 				$value = self::arrayToJson($value);

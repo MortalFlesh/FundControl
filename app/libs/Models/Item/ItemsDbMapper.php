@@ -30,7 +30,7 @@ class ItemsDbMapper implements ItemsMapper {
 	 * @return Item[]
 	 */
 	public function getItems($userId) {
-		$items = array();
+		$items = [];
 
 		$res = $this->Db->query("SELECT `id`, `item_data`, `time`
 			FROM `" . Setup::PREFIX . "items`

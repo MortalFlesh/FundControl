@@ -25,7 +25,7 @@ class AjaxActionGetItems implements IAjaxAction {
 	}
 
 	public function run() {
-		$serializedItems = array();
+		$serializedItems = [];
 
 		if ($this->Authorize->isLogged()) {
 			$userId = $this->Authorize->getUserId();

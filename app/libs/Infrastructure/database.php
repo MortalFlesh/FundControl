@@ -57,7 +57,7 @@ class Database {
 	}
 
 	public function fetchAssoc($resource) {
-		return ($resource !== false ? mysql_fetch_assoc($resource) : array());
+		return ($resource !== false ? mysql_fetch_assoc($resource) : []);
 	}
 
 	public function rows($resource) {

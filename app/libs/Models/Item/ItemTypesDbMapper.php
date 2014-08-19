@@ -31,7 +31,7 @@ class ItemTypesDbMapper implements ItemTypesMapper {
 
 	/** @return ItemType[] */
 	public function getItemTypes() {
-		$itemTypes = array();
+		$itemTypes = [];
 
 		$res = $this->Db->query("SELECT id, name FROM `" . Setup::PREFIX . "item_types` ORDER BY name");
 		while ($row = $this->Db->fetchAssoc($res)) {
