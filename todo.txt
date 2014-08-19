@@ -1,7 +1,10 @@
-Refaktorovat FundControl
+Refaktorovat slozky
+Refaktorovat na PHP5.4
+Setup::PREFIX -> Config->getTablePrefix()
+Pridat zisk
+
 itemService -> Facade
-Authorize -> model
-MainController -> ActionsFactory -> getAction (jako u ajaxu)
+Refaktorovat FundControl
 
 Action by mela vracet view()
 	-> a to by melo pouzivat svuj model?
@@ -9,8 +12,6 @@ Action by mela vracet view()
 		-> main -> reload()
 		-> ajax -> printJson (tzn. controller by mel byt zavisly na JsonPrinetru, a IAjaxActions by mely mit metodu getJson()
 			-> IAjaxAction->assignData()->run()->getResponse();
-
-Setup::PREFIX -> Config->getTablePrefix()
 
 ===============================
 
@@ -30,6 +31,3 @@ $JavascriptAutoloader
 - priani hashovani pro scripty pri vytvareni cache - fileName = MD5({directoryName}_{recursively[1|0]} => compiledCacheName = fileNames.implode('|').md5()
 
 ===============================
-
-Add new Item / js
-success -> clear form/fix
