@@ -15,31 +15,39 @@ app.controller('MainController', function($rootScope, $scope, $timeout,
 
 	$scope.loadFlashes = function() {
 		flashService.get()
-			.then(function(FlashMessages){
-				$scope.flashes = FlashMessages.getFlashMessages();
-			})
-			.then(function(){
-				$timeout(function(){
-					$scope.flashes = {};
-				}, 3000);
-			});
+		.then(function(FlashMessages){
+			$scope.flashes = FlashMessages.getFlashMessages();
+		})
+		.then(function(){
+			$timeout(function(){
+				$scope.flashes = {};
+			}, 6000);
+		});
+		return $scope;
 	};
 
 	$scope.loadItemTypes = function() {
-		itemTypesService.get().then(function(ItemTypes){
-			$scope.itemTypes = ItemTypes.getItemTypes();
-		});
+		if (logged) {
+			itemTypesService.get().then(function(ItemTypes){
+				$scope.itemTypes = ItemTypes.getItemTypes();
+			});
+		}
+		return $scope;
 	};
 
 	$scope.loadItems = function() {
-		itemsService.get().then(function(Items){
-			$scope.items = Items.getItems();
-		});
+		if (logged) {
+			itemsService.get().then(function(Items){
+				$scope.items = Items.getItems();
+			});
+		}
+		return $scope;
 	};
 
 	$scope.oneAtATime = true;
 
-	$scope.loadItemTypes();
-	$scope.loadFlashes();
-	$scope.loadItems();
+	$scope
+		.loadItemTypes()
+		.loadItems()
+		.loadFlashes();
 });
