@@ -62,7 +62,7 @@ class FundControl {
 
 	/** @return FlashMessage[] */
 	public function getFlashes() {
-		return $this->FlashMessagesRepository->getFlashes();
+		return $this->Flashes->getFlashes();
 	}
 
 	/**

@@ -86,6 +86,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 
 				<?
 				$FundControl->view('flashes');
+				$FundControl->view('flashesServer');
 				?>
 
 				<ng-view class="app-content" ng-hide="loading"></ng-view>

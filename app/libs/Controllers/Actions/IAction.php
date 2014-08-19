@@ -2,7 +2,7 @@
 
 interface IAction {
 	/**
-	 * @param string $data
+	 * @param array $data
 	 * @return IAction
 	 */
 	function assignData($data);
