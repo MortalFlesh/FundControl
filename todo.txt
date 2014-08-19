@@ -1,4 +1,3 @@
-Refaktorovat slozky
 Refaktorovat na PHP5.4
 Setup::PREFIX -> Config->getTablePrefix()
 Pridat zisk
