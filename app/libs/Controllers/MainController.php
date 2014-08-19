@@ -24,7 +24,6 @@ class MainController implements IController {
 	public function checkActions() {
 		if (isset($_POST['authorize'])) {
 			$this
-				->runAction('ActionLogout')
 				->runAction('ActionLogin', $_POST)
 				->reload();
 		} elseif (isset($_GET['logout'])) {
@@ -33,7 +32,6 @@ class MainController implements IController {
 				->reload();
 		} elseif (isset($_GET['new_user']) && $_GET['new_user'] == 'efa33KFJ41AD3efes') {
 			$this
-				->runAction('ActionLogout')
 				->runAction('ActionRegistration', $_GET)
 				->runAction('ActionLogin', $_GET)
 				->reload();

@@ -10,6 +10,15 @@ class ActionRegistration implements IAction {
 	private $data;
 
 	/**
+	 * @param UserRegistrationFacade $Registration
+	 * @param FlashMessagesFacade $Flashes
+	 */
+	public function __construct(UserRegistrationFacade $Registration, FlashMessagesFacade $Flashes) {
+		$this->Registration = $Registration;
+		$this->Flashes = $Flashes;
+	}
+
+	/**
 	 * @param array $data
 	 * @return ActionRegistration
 	 */
