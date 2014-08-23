@@ -8,8 +8,13 @@ class Database {
 	/** @var LogWriter */
 	private $Log;
 
+	/** @var Config */
+	private $Config;
+
 	public function __construct(Config $Config, LogWriter $Log) {
-		$dbConfig = $Config->getDbConfig();
+		$this->Config = $Config;
+
+		$dbConfig = $this->Config->getDbConfig();
 		$host = $dbConfig['host'];
 		$user = $dbConfig['user'];
 		$password = $dbConfig['password'];
@@ -85,5 +90,9 @@ class Database {
 
 	public function lastInsertedId() {
 		return mysql_insert_id($this->connection);
+	}
+
+	public function getPrefix() {
+		return $this->Config->getPrefix();
 	}
 }
