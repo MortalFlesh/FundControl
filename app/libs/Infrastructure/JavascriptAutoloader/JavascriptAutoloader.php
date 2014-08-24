@@ -31,7 +31,7 @@ class JavascriptAutoloader {
 	}
 
 	public function addDirectory($directory, $recursively = false) {
-		$this->directories[] = new JADirInfo($directory, $recursively);
+		$this->directories[] = new JADirInfo($this->rootDir . $directory, $recursively);
 		return $this;
 	}
 
@@ -47,14 +47,15 @@ class JavascriptAutoloader {
 	}
 
 	private function autoloadDirectory(JADirInfo $JADirInfo) {
-		foreach(new DirectoryIterator($this->rootDir . $JADirInfo->getDirName()) as $FileInfo) {
+		foreach(new DirectoryIterator($JADirInfo->getDirName()) as $FileInfo) {
 			if ($FileInfo->isDot() || ($FileInfo->isDir() && !$JADirInfo->getRecursively())) {
 				continue;
 			} elseif ($FileInfo->isDir() && $JADirInfo->getRecursively()) {
-				$this->autoloadDirectory(new JADirInfo($FileInfo->getFilename(), true));
+				$this->autoloadDirectory(new JADirInfo($FileInfo->getPathname(), true));
 			}
 
-			$scriptFileName = $JADirInfo->getDirName() . '/' . $FileInfo->getFilename();
+			$scriptPathName = $JADirInfo->getDirName() . '/' . $FileInfo->getFilename();
+			$scriptFileName = str_replace($this->rootDir, '', $scriptPathName);
 			$this->autoloadScript($scriptFileName);
 		}
 	}
