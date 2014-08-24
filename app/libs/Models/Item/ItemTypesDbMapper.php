@@ -23,12 +23,28 @@ class ItemTypesDbMapper implements ItemTypesMapper {
 	 * @return ItemTypesDbMapper
 	 */
 	public function saveNewItemType($itemTypeName) {
+		$typeId = $this->loadTypeId($itemTypeName);
+		if ($typeId > 0) {
+			$this->newItemTypeId = $typeId;
+			return;
+		}
+
 		$this->Db->query("INSERT INTO `" . $this->Config->getPrefix() . "item_types` (`name`) VALUES
 			('" . $this->Db->escape($itemTypeName) . "')");
 
 		$this->newItemTypeId = $this->Db->lastInsertedId();
 
 		return $this;
+	}
+
+	/**
+	 * @param string $itemTypeName
+	 * @return int
+	 */
+	private function loadTypeId($itemTypeName) {
+		return (int)$this->Db->queryValue("SELECT `id`
+			FROM `" . $this->Db->getPrefix() . "item_types`
+			WHERE `name` LIKE '" . $this->Db->escape($itemTypeName) . "'");
 	}
 
 	/** @return int */
