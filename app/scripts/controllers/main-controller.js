@@ -44,10 +44,28 @@ app.controller('MainController', function($rootScope, $scope, $timeout,
 		return $scope;
 	};
 
+	$scope.loadGainTypes = function() {
+		if (logged) {
+			gainTypesService.get().then(function(GainTypes){
+				$scope.gainTypes = GainTypes.getGainTypes();
+			});
+		}
+		return $scope;
+	};
+
+	$scope.loadGains = function() {
+		if (logged) {
+			gainsService.get().then(function(Gains){
+				$scope.gains = Gains.getGains();
+			});
+		}
+		return $scope;
+	};
+
 	$scope.oneAtATime = true;
 
 	$scope
-		.loadItemTypes()
-		.loadItems()
+		.loadItemTypes().loadItems()
+		.loadGainTypes().loadGains()
 		.loadFlashes();
 });

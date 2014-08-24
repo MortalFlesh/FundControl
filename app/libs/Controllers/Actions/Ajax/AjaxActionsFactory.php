@@ -6,6 +6,8 @@ class AjaxActionsFactory {
 	const ACTION_SAVE_NEW_ITEM = 'save-new-item';
 	const ACTION_GET_ITEMS = 'get-items';
 	const ACTION_SAVE_NEW_GAIN = 'save-new-gain';
+	const ACTION_GET_GAIN_TYPES = 'get-gain-types';
+	const ACTION_GET_GAINS = 'get-gains';
 
 	/** @var ServiceFactory */
 	private $ServiceFactory;
@@ -26,6 +28,8 @@ class AjaxActionsFactory {
 			case self::ACTION_SAVE_NEW_ITEM: return $this->getService('AjaxActionSaveNewItem');
 			case self::ACTION_GET_ITEMS: return $this->getService('AjaxActionGetItems');
 			case self::ACTION_SAVE_NEW_GAIN: return $this->getService('AjaxActionSaveNewGain');
+			case self::ACTION_GET_GAIN_TYPES: return $this->getService('AjaxActionGetGainTypes');
+			case self::ACTION_GET_GAINS: return $this->getService('AjaxActionGetGains');
 			default: throw new AjaxActionNotFoundException($actionName);
 		}
 	}
