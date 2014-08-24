@@ -3,7 +3,11 @@ $rootDir = __DIR__ . '/';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
 
-$JavascriptAutoloader = new JavascriptAutoloader();
+$JavascriptAutoloader = new JavascriptAutoloader(new JAPrinter($FundControl->getHomeUrl()));
+$JavascriptAutoloader
+	->setRootDir($rootDir)
+	->setCompileToOneFile(new JACompiler($rootDir, 'cache/js'))
+	->setMinifyOutput(new JAMinify($rootDir));
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,8 +39,6 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 		<script src="<?=$FundControl->getHomeUrl()?>../dist/js/mobile-angular-ui.min.js"></script>
 		<?
 		$JavascriptAutoloader
-			->setHomeUrl($FundControl->getHomeUrl())
-			->setRootDir($rootDir)
 			->addDirectory('scripts')
 			->addDirectory('scripts/models', $recursively = true)
 			->addDirectory('scripts/services')

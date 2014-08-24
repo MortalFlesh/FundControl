@@ -3,23 +3,27 @@
 class JavascriptAutoloader {
 	const EXTENSION = '.js';
 
+	/** @var JACompiler */
+	private $Compiler;
+
+	/** @var JAMinify */
+	private $Minify;
+
+	/** @var JAPrinter */
+	private $Printer;
+
 	private $rootDir;
 
 	/** @var JADirInfo[] */
 	private $directories = [];
 
-	private $homeUrl;
-
 	private $scripts = [];
 
 	private $cacheAllowed = true;
 
-	public function __construct() {
-	}
-
-	public function setHomeUrl($homeUrl) {
-		$this->homeUrl = $homeUrl;
-		return $this;
+	/** @param JAPrinter $Printer */
+	public function __construct(JAPrinter $Printer) {
+		$this->Printer = $Printer;
 	}
 
 	public function setRootDir($rootDir) {
@@ -32,6 +36,20 @@ class JavascriptAutoloader {
 		return $this;
 	}
 
+	/**
+	 * @param JACompiler $Compiler
+	 * @return JavascriptAutoloader
+	 */
+	public function setCompileToOneFile(JACompiler $Compiler) {
+		$this->Compiler = $Compiler;
+		return $this;
+	}
+
+	public function setMinifyOutput(JAMinify $Minify) {
+		$this->Minify = $Minify;
+		return $this;
+	}
+
 	public function addDirectory($directory, $recursively = false) {
 		$this->directories[] = new JADirInfo($this->rootDir . $directory, $recursively);
 		return $this;
@@ -39,7 +57,25 @@ class JavascriptAutoloader {
 
 	public function autoload() {
 		$this->initScripts();
-		$this->printScripts();
+
+		if (!$this->cacheAllowed) {
+			$this->Printer->denyCache();
+		}
+
+		if (isset($this->Compiler)) {
+			if (isset($this->Minify)) {
+				$this->Compiler->setMinify($this->Minify);
+			}
+
+			$compiledScript = $this->Compiler
+				->setScripts($this->scripts)
+				->compileToOneFile()
+				->getCompiledScriptPath();
+
+			$this->Printer->printScript($compiledScript);
+		} else {
+			$this->Printer->printScripts($this->scripts);
+		}
 	}
 
 	private function initScripts() {
@@ -67,19 +103,5 @@ class JavascriptAutoloader {
 		if (substr($scriptFileName, -$extLen) === self::EXTENSION) {
 			$this->scripts[] = $scriptFileName;
 		}
-	}
-
-	private function printScripts() {
-		foreach($this->scripts as $scriptFileName) {
-			$this->printScript($scriptFileName);
-		}
-	}
-
-	private function printScript($scriptFileName) {
-		$scriptUrl = $this->homeUrl . $scriptFileName;
-		if (!$this->cacheAllowed) {
-			$scriptUrl .= '?t=' . time();
-		}
-		?><script type="text/javascript" src="<?=$scriptUrl?>"></script><?
 	}
 }
