@@ -38,7 +38,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 			->setHomeUrl($FundControl->getHomeUrl())
 			->setRootDir($rootDir)
 			->addDirectory('scripts')
-			->addDirectory('scripts/models')
+			->addDirectory('scripts/models', $recursively = true)
 			->addDirectory('scripts/services')
 			->addDirectory('scripts/directives')
 			->addDirectory('scripts/controllers')
