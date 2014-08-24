@@ -43,12 +43,12 @@ class GainsDbMapper {
 			$gainData = json_decode($row['gain_data'], true);
 
 			$Gain = new Gain(
-				$row['name'],
+				$gainData['name'],
 				new GainType(
 					$gainData['gainType']['name'],
 					$gainData['gainType']['id']
 				),
-				$row['amount'],
+				$gainData['amount'],
 				\DateTime::createFromFormat(Database::TIME_FORMAT, $row['time'])
 			);
 

@@ -12,4 +12,6 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/userInfo', {templateUrl: homeUrl + "views/sections/userInfo.php"});
 	$routeProvider.when('/items', {templateUrl: homeUrl + "views/sections/items.php"});
 	$routeProvider.when('/itemTypes', {templateUrl: homeUrl + "views/sections/itemTypes.php"});
+	$routeProvider.when('/gains', {templateUrl: homeUrl + "views/sections/gains.php"});
+	$routeProvider.when('/gainTypes', {templateUrl: homeUrl + "views/sections/gainTypes.php"});
 });

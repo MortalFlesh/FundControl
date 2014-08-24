@@ -17,6 +17,8 @@ require_once $rootDir . 'core/fundControlApp.php';
 				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/userInfo">User Info <i class="fa fa-chevron-right pull-right"></i></a>
 				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/items">Items <i class="fa fa-chevron-right pull-right"></i></a>
 				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/itemTypes">Item Types <i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/gains">Gains <i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" href="<?=$FundControl->getHomeUrl()?>#/gainTypes">Gain Types <i class="fa fa-chevron-right pull-right"></i></a>
 				<?
 			}
 			?>
