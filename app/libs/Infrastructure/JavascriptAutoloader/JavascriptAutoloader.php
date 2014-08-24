@@ -1,6 +1,8 @@
 <?php
 
 class JavascriptAutoloader {
+	const EXTENSION = '.js';
+
 	private $rootDir;
 
 	/** @var JADirInfo[] */
@@ -55,13 +57,16 @@ class JavascriptAutoloader {
 			}
 
 			$scriptPathName = $JADirInfo->getDirName() . '/' . $FileInfo->getFilename();
-			$scriptFileName = str_replace($this->rootDir, '', $scriptPathName);
+			$scriptFileName = str_replace([$this->rootDir, '\\'], ['', '/'], $scriptPathName);
 			$this->autoloadScript($scriptFileName);
 		}
 	}
 
 	private function autoloadScript($scriptFileName) {
-		$this->scripts[] = $scriptFileName;
+		$extLen = strlen(self::EXTENSION);
+		if (substr($scriptFileName, -$extLen) === self::EXTENSION) {
+			$this->scripts[] = $scriptFileName;
+		}
 	}
 
 	private function printScripts() {
