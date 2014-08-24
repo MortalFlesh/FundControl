@@ -66,6 +66,9 @@ class JavascriptAutoloader {
 			if (isset($this->Minify)) {
 				$this->Compiler->setMinify($this->Minify);
 			}
+			if (!$this->cacheAllowed) {
+				$this->Compiler->denyCache();
+			}
 
 			$compiledScript = $this->Compiler
 				->setScripts($this->scripts)
