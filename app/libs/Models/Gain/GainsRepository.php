@@ -17,4 +17,12 @@ class GainsRepository {
 		$this->DbMapper->saveGain($Gain, $userId);
 		return $this;
 	}
+
+	/**
+	 * @param int $userId
+	 * @return Gain[]
+	 */
+	public function getGains($userId) {
+		return $this->DbMapper->loadGains($userId);
+	}
 }

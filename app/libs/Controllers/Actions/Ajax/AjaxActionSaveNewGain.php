@@ -1,9 +1,6 @@
 <?php
 
 class AjaxActionSaveNewGain implements IAjaxAction {
-	const STATUS_OK = 'OK';
-	const STATUS_ERROR = 'ERROR';
-
 	/** @var AddNewGainFacade */
 	private $AddNewGain;
 	
@@ -33,7 +30,7 @@ class AjaxActionSaveNewGain implements IAjaxAction {
 		$this->Authorize = $Authorize;
 	}
 
-	public function assignData(array $data) {
+	public function assignData($data) {
 		$this->data = $data;
 		return $this;
 	}
@@ -51,7 +48,7 @@ class AjaxActionSaveNewGain implements IAjaxAction {
 		try {
 			$messages = $this->AddNewGain
 				->saveForm($this->data, $userId)
-				->getMessageAndClear();
+				->getMessagesAndClear();
 
 			foreach($messages as $message) {
 				$this->Flashes->flashSuccess($message);

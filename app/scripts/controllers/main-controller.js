@@ -1,5 +1,5 @@
-app.controller('MainController', function($rootScope, $scope, $timeout,
-	itemTypesService, flashService, itemsService) {
+app.controller('MainController', function($rootScope, $scope, $timeout, flashService,
+	itemTypesService, itemsService, gainTypesService, gainsService) {
 
 	$rootScope.$on("$routeChangeStart", function() {
 		$rootScope.loading = true;

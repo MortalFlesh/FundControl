@@ -13,10 +13,26 @@ class GainTypesDbMapper {
 
 	/** @param GainType $Type */
 	public function saveNewType(GainType $Type) {
+		$typeId = $this->loadTypeId($Type);
+		if ($typeId > 0) {
+			$this->lastInsertedId = $typeId;
+			return;
+		}
+
 		$this->Db->query("INSERT INTO `" . $this->Db->getPrefix() . "gain_types` (`name`)
-			VALUES ('" . $Type->getName() . "')");
+			VALUES ('" . $this->Db->escape($Type->getName()) . "')");
 
 		$this->lastInsertedId = $this->Db->lastInsertedId();
+	}
+
+	/**
+	 * @param GainType $Type
+	 * @return int
+	 */
+	private function loadTypeId(GainType $Type) {
+		return (int)$this->Db->queryValue("SELECT `id`
+			FROM `" . $this->Db->getPrefix() . "gain_types`
+			WHERE `name` LIKE '" . $this->Db->escape($Type->getName()) . "'");
 	}
 
 	/** @return int */

@@ -8,6 +8,11 @@ class AddNewGainTypeFacade {
 	/** @var GainTypesRepository */
 	private $Repository;
 
+	public function __construct(GainTypesService $Service, GainTypesRepository $Repository) {
+		$this->Service = $Service;
+		$this->Repository = $Repository;
+	}
+
 	/**
 	 * @param string $gainTypeName
 	 * @return AddNewGainTypeFacade

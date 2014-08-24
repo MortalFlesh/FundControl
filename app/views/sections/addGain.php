@@ -29,7 +29,7 @@ $Render = new FundFormRender();
 					)
 					->renderCustom(function() use ($Render) {
 						?>
-						<div ng-show="addingGain.addNewItem">
+						<div ng-show="addingGain.addNewGain">
 							<?
 							$Render->renderTextModel('addingGain.newTypeName', 'New', 'newGainType', 'New gain type name');
 							?>
