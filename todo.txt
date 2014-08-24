@@ -1,6 +1,7 @@
 Pridat zisk
 
 itemService -> Facade
+Refaktorovat SaveNew[Item|Gain] -> udelat FormHandler
 Refaktorovat FundControl
 
 Action by mela vracet view()
