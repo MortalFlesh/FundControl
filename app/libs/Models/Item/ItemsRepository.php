@@ -3,11 +3,11 @@
 class ItemsRepository {
 
 	/** @var ItemsDbMapper */
-	private $ItemsDbMapper;
+	private $DbMapper;
 
 	/** @param ItemsDbMapper $ItemsDbMapper */
 	public function __construct(ItemsDbMapper $ItemsDbMapper) {
-		$this->ItemsDbMapper = $ItemsDbMapper;
+		$this->DbMapper = $ItemsDbMapper;
 	}
 
 	/**
@@ -16,7 +16,7 @@ class ItemsRepository {
 	 * @return ItemsRepository
 	 */
 	public function saveItem(Item $Item, $userId) {
-		$this->ItemsDbMapper->saveItem($Item, $userId);
+		$this->DbMapper->saveItem($Item, $userId);
 		return $this;
 	}
 
@@ -25,6 +25,6 @@ class ItemsRepository {
 	 * @return Item[]
 	 */
 	public function getItems($userId) {
-		return $this->ItemsDbMapper->getItems($userId);
+		return $this->DbMapper->loadItems($userId);
 	}
 }

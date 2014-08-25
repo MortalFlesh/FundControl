@@ -1,20 +1,16 @@
 <?php
 
-class ItemsDbMapper implements ItemsMapper {
+class ItemsDbMapper {
 
 	/** @var Database */
 	private $Db;
-
-	/** @var Config */
-	private $Config;
 
 	/**
 	 * @param Database $Db
 	 * @param Config $Config
 	 */
-	public function __construct(Database $Db, Config $Config) {
+	public function __construct(Database $Db) {
 		$this->Db = $Db;
-		$this->Config = $Config;
 	}
 
 	/**
@@ -26,7 +22,7 @@ class ItemsDbMapper implements ItemsMapper {
 		$itemData = $Item->serialize();
 		$Time = $Item->getCreatedTime();
 
-		$this->Db->query("INSERT INTO `" . $this->Config->getPrefix() . "items` (`user_id`, `item_data`, `time`) VALUES
+		$this->Db->query("INSERT INTO `" . $this->Db->getPrefix() . "items` (`user_id`, `item_data`, `time`) VALUES
 			('" . (int)$userId . "', '" . $this->Db->escape($itemData) . "', '" . $Time->format(Database::TIME_FORMAT) . "')");
 
 		return $this;
@@ -36,11 +32,11 @@ class ItemsDbMapper implements ItemsMapper {
 	 * @param int $userId
 	 * @return Item[]
 	 */
-	public function getItems($userId) {
+	public function loadItems($userId) {
 		$items = [];
 
 		$res = $this->Db->query("SELECT `id`, `item_data`, `time`
-			FROM `" . $this->Config->getPrefix() . "items`
+			FROM `" . $this->Db->getPrefix() . "items`
 			WHERE user_id = " . (int)$userId);
 
 		while($row = $this->Db->fetchAssoc($res)) {
@@ -49,8 +45,8 @@ class ItemsDbMapper implements ItemsMapper {
 			$Item = new Item(
 				$itemData['name'],
 				new ItemType(
-					$itemData['itemType']['id'],
-					$itemData['itemType']['name']
+					$itemData['itemType']['name'],
+					$itemData['itemType']['id']
 				),
 				$itemData['amount'],
 				\DateTime::createFromFormat(Database::TIME_FORMAT, $row['time'])

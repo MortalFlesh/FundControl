@@ -7,10 +7,10 @@ class ItemType {
 	private $name;
 
 	/**
-	 * @param int $id
 	 * @param string $name
+	 * @param int $id
 	 */
-	public function __construct($id, $name) {
+	public function __construct($name, $id = 0) {
 		$this->id = (int)$id;
 		$this->name = $name;
 	}

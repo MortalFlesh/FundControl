@@ -1,45 +1,30 @@
 <?php
 
 class ItemTypesService {
-	/** @var ItemTypesRepository */
-	private $ItemTypesRepository;
-
-	/** @param ItemTypesRepository $ItemTypesRepository */
-	public function __construct(ItemTypesRepository $ItemTypesRepository) {
-		$this->ItemTypesRepository = $ItemTypesRepository;
-	}
 
 	/**
-	 * @param string $newTypeName
-	 * @return ItemTypesService
+	 * @param string $itemTypeName
+	 * @return ItemType
 	 */
-	public function saveNewItem($newTypeName) {
-		$this->ItemTypesRepository->saveNewItemType($newTypeName);
-		return $this;
+	public function createNewType($itemTypeName) {
+		return new ItemType($itemTypeName);
 	}
 
-	/** @return int */
-	public function getNewItemTypeId() {
-		return $this->ItemTypesRepository->getNewItemTypeId();
-	}
-
-	/**
-	 * @param bool $force
-	 * @return ItemType[]
-	 */
-	public function getItemTypes($force = false) {
-		return $this->ItemTypesRepository->getItemTypes($force);
-	}
-
-	/**
-	 * @param ItemType[] $itemTypes
-	 * @return array
-	 */
-	public function serializeItemTypes(array $itemTypes) {
-		$serializedTypes = [];
-		foreach($itemTypes as $key => $Type) {
-			$serializedTypes[$key] = $Type->serialize();
+	/** @param ItemType[] $types */
+	public function serializeTypes(array $types) {
+		$serialized = [];
+		foreach($types as $ItemType) {
+			$serialized[] = $ItemType->serialize();
 		}
-		return $serializedTypes;
+		return $serialized;
+	}
+
+	/**
+	 * @param int $id
+	 * @param string $name
+	 * @return ItemType
+	 */
+	public function createItemType($id, $name) {
+		return new ItemType($name, $id);
 	}
 }

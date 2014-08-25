@@ -1,73 +1,63 @@
 <?php
 
-class ItemTypesDbMapper implements ItemTypesMapper {
+class ItemTypesDbMapper {
 	/** @var Database */
 	private $Db;
 
-	private $newItemTypeId;
-
-	/** @var Config */
-	private $Config;
+	private $lastInsertedId;
 
 	/**
 	 * @param Database $Db
 	 * @param Config $Config
 	 */
-	public function __construct(Database $Db, Config $Config) {
+	public function __construct(Database $Db) {
 		$this->Db = $Db;
-		$this->Config = $Config;
 	}
 
-	/**
-	 * @param string $itemTypeName
-	 * @return ItemTypesDbMapper
-	 */
-	public function saveNewItemType($itemTypeName) {
-		$typeId = $this->loadTypeId($itemTypeName);
+	/** @param ItemType $Type */
+	public function saveNewType(ItemType $Type) {
+		$typeId = $this->loadTypeId($Type);
 		if ($typeId > 0) {
-			$this->newItemTypeId = $typeId;
+			$this->lastInsertedId = $typeId;
 			return;
 		}
 
-		$this->Db->query("INSERT INTO `" . $this->Config->getPrefix() . "item_types` (`name`) VALUES
-			('" . $this->Db->escape($itemTypeName) . "')");
+		$this->Db->query("INSERT INTO `" . $this->Db->getPrefix() . "item_types` (`name`)
+			VALUES ('" . $this->Db->escape($Type->getName()) . "')");
 
-		$this->newItemTypeId = $this->Db->lastInsertedId();
-
-		return $this;
+		$this->lastInsertedId = $this->Db->lastInsertedId();
 	}
 
 	/**
-	 * @param string $itemTypeName
+	 * @param ItemType $Type
 	 * @return int
 	 */
-	private function loadTypeId($itemTypeName) {
+	private function loadTypeId(ItemType $Type) {
 		return (int)$this->Db->queryValue("SELECT `id`
 			FROM `" . $this->Db->getPrefix() . "item_types`
-			WHERE `name` LIKE '" . $this->Db->escape($itemTypeName) . "'");
+			WHERE `name` LIKE '" . $this->Db->escape($Type->getName()) . "'");
 	}
 
 	/** @return int */
 	public function getNewItemTypeId() {
-		return $this->newItemTypeId;
+		return $this->lastInsertedId;
 	}
 
 	/** @return ItemType[] */
-	public function getItemTypes() {
+	public function loadItemTypes() {
+		$res = $this->Db->query("SELECT `id`, `name` FROM `" . $this->Db->getPrefix() . "item_types` ORDER BY `name`");
+		return $this->fetchAsItemTypes($res);
+	}
+
+	/**
+	 * @param resource $resource
+	 * @return ItemType[]
+	 */
+	public function fetchAsItemTypes($resource) {
 		$itemTypes = [];
-
-		$res = $this->Db->query("SELECT id, name FROM `" . $this->Config->getPrefix() . "item_types` ORDER BY name");
-		while ($row = $this->Db->fetchAssoc($res)) {
-			$itemTypes[(int)$row['id']] = new ItemType($row['id'], $row['name']);
+		while ($row = $this->Db->fetchAssoc($resource)) {
+			$itemTypes[(int)$row['id']] = new ItemType($row['name'], $row['id']);
 		}
-
-		$itemTypes[ItemType::OTHER_TYPE_ID] = new ItemType(ItemType::OTHER_TYPE_ID, 'Other');
-
 		return $itemTypes;
 	}
-
-	public function setItemTypes(array $itemTypes) {
-		throw new Exception('Not implemented yet: ' . __METHOD__);
-	}
-
 }

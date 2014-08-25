@@ -1,15 +1,7 @@
 <?php
 
-class ItemTypesMemMapper implements ItemTypesMapper {
+class ItemTypesMemMapper {
 	private $itemTypes = [];
-
-	public function saveNewItemType($itemTypeName) {
-		throw new Exception('Not implemented yet: ' . __METHOD__);
-	}
-
-	public function getNewItemTypeId() {
-		throw new Exception('Not implemented yet: ' . __METHOD__);
-	}
 
 	/** @return ItemType[] */
 	public function getItemTypes() {

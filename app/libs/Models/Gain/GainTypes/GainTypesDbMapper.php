@@ -42,7 +42,7 @@ class GainTypesDbMapper {
 
 	/** @return GainType[] */
 	public function loadGainTypes() {
-		$res = $this->Db->query("SELECT `id`, `name` FROM `" . $this->Db->getPrefix() . "gain_types`");
+		$res = $this->Db->query("SELECT `id`, `name` FROM `" . $this->Db->getPrefix() . "gain_types` ORDER BY `name`");
 		return $this->fetchAsGainTypes($res);
 	}
 

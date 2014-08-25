@@ -3,11 +3,10 @@
 class ItemTypesRepository {
 
 	/** @var ItemTypesDbMapper */
-	private $ItemTypesDbMapper;
+	private $DbMapper;
 
 	/** @var ItemTypesMemMapper */
-	private $ItemTypeMemMapper;
-
+	private $MemMapper;
 	private $itemTypesInMemory = false;
 
 	/**
@@ -15,35 +14,33 @@ class ItemTypesRepository {
 	 * @param ItemTypesMemMapper $ItemTypeMemMapper
 	 */
 	public function __construct(ItemTypesDbMapper $ItemTypesDbMapper, ItemTypesMemMapper $ItemTypeMemMapper) {
-		$this->ItemTypesDbMapper = $ItemTypesDbMapper;
-		$this->ItemTypeMemMapper = $ItemTypeMemMapper;
+		$this->DbMapper = $ItemTypesDbMapper;
+		$this->MemMapper = $ItemTypeMemMapper;
 	}
 
 	/**
-	 * @param string $newItemTypeName
+	 * @param ItemType $Type
 	 * @return ItemTypesRepository
 	 */
-	public function saveNewItemType($newItemTypeName) {
-		$this->ItemTypesDbMapper->saveNewItemType($newItemTypeName);
+	public function saveNewType(ItemType $Type) {
+		$this->DbMapper->saveNewType($Type);
+		$this->itemTypesInMemory = false;
 		return $this;
 	}
 
 	/** @return int */
 	public function getNewItemTypeId() {
-		return $this->ItemTypesDbMapper->getNewItemTypeId();
+		return $this->DbMapper->getNewItemTypeId();
 	}
 
-	/**
-	 * @param bool $force
-	 * @return ItemType[]
-	 */
-	public function getItemTypes($force = false) {
-		if(!$this->itemTypesInMemory || $force) {
+	/** @return ItemType[] */
+	public function getItemTypes() {
+		if(!$this->itemTypesInMemory) {
 			$this->itemTypesInMemory = true;
 
-			$itemTypes = $this->ItemTypesDbMapper->getItemTypes();
-			$this->ItemTypeMemMapper->setItemTypes($itemTypes);
+			$itemTypes = $this->DbMapper->loadItemTypes();
+			$this->MemMapper->setItemTypes($itemTypes);
 		}
-		return $this->ItemTypeMemMapper->getItemTypes();
+		return $this->MemMapper->getItemTypes();
 	}
 }
