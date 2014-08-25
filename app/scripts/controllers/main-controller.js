@@ -1,5 +1,5 @@
 app.controller('MainController', function($rootScope, $scope, $timeout, flashService,
-	itemTypesService, itemsService, gainTypesService, gainsService) {
+	itemTypesService, itemsService, gainTypesService, gainsService, userTabsService) {
 
 	$rootScope.$on("$routeChangeStart", function() {
 		$rootScope.loading = true;
@@ -9,9 +9,11 @@ app.controller('MainController', function($rootScope, $scope, $timeout, flashSer
 		$rootScope.loading = false;
 	});
 
-	$scope.logout = function() {
-		window.location.href = homeUrl + '?logout';
-	};
+	$scope.oneAtATime = true;
+
+	//
+	// flashes
+	//
 
 	$scope.loadFlashes = function() {
 		flashService.get()
@@ -25,6 +27,10 @@ app.controller('MainController', function($rootScope, $scope, $timeout, flashSer
 		});
 		return $scope;
 	};
+
+	//
+	// items
+	//
 
 	$scope.loadItemTypes = function() {
 		if (logged) {
@@ -44,6 +50,10 @@ app.controller('MainController', function($rootScope, $scope, $timeout, flashSer
 		return $scope;
 	};
 
+	//
+	// gains
+	//
+
 	$scope.loadGainTypes = function() {
 		if (logged) {
 			gainTypesService.get().then(function(GainTypes){
@@ -62,10 +72,78 @@ app.controller('MainController', function($rootScope, $scope, $timeout, flashSer
 		return $scope;
 	};
 
-	$scope.oneAtATime = true;
+	//
+	// init
+	//
 
 	$scope
 		.loadItemTypes().loadItems()
 		.loadGainTypes().loadGains()
 		.loadFlashes();
+
+	//
+	// user
+	//
+
+	$scope.logout = function() {
+		window.location.href = homeUrl + '?logout';
+	};
+	
+	$scope.userTabData = {
+		month : {},
+		all : {},
+		byTypes : {},
+	};
+
+	$scope.loadUserTabMonth = function(){
+		if (logged) {
+			$rootScope.loading = true;
+
+			userTabsService.get('month').then(function(UserTabMonth){
+				console.log('UserTabMonth', UserTabMonth);
+				
+				$scope.userTabData['month'] = UserTabMonth;
+				$rootScope.loading = false;
+			});
+		}
+		return $scope;
+	};
+
+	$scope.loadUserTabAll = function(){
+		if (logged) {
+			console.log('todo - loadUserTabAll');
+			$scope.userTabData['all'] = {'data': 'todo'};
+			$rootScope.loading = false;
+		}
+		return $scope;
+	};
+	
+	$scope.loadUserTabByTypes = function(){
+		if (logged) {
+			console.log('todo - loadUserTabByTypes');
+			$scope.userTabData['byTypes'] = {'data': 'todo'};
+			$rootScope.loading = false;
+		}
+		return $scope;
+	};
+
+	$scope.loadUserTabsData = function(tabName) {
+		console.log('load - ' + tabName);
+
+		if (isEmpty($scope.userTabData[tabName])) {
+			switch(tabName) {
+				case 'month': $scope.loadUserTabMonth(); break;
+				case 'all': $scope.loadUserTabAll(); break;
+				case 'byTypes': $scope.loadUserTabByTypes(); break;
+			}
+		}
+	};
+
+	//
+	// other
+	//
+
+	function isEmpty(obj) {
+		return Object.keys(obj).length === 0;
+	}
 });
