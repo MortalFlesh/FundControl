@@ -14,19 +14,13 @@ Action by mela vracet view()
 
 ===============================
 
-JavascriptAutoloader
+další funkènost:
+- statistiky
+	- mesicni (vyber mesice)
+	- celkove
 
-$JavascriptAutoloader = new JavascriptAutoloader();
-$JavascriptAutoloader
-	->setHomeUrl('http://test/')
-	->addDirectory($rootDir . 'scripts')
-	->addDirectory($rootDir . 'scripts/modules, $recursively = true)
-	->setCacheStorage($rootDir . 'cache')
-	->setUseMinify()
-	->compileToOneFile()
-	->autoload();
+- todo list - co bych chtel/potreboval koupit
+	- item (name, type, amount, priority)
 
-- pridavani konretnich souboru (kvuli poradi)
-- priani hashovani pro scripty pri vytvareni cache - fileName = MD5({directoryName}_{recursively[1|0]} => compiledCacheName = fileNames.implode('|').md5()
-
-===============================
+- shopping list
+	- co koupit
