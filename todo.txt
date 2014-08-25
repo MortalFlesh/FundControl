@@ -1,6 +1,5 @@
 Pridat zisk
 
-itemService -> Facade
 Refaktorovat AjaxActionsFactory -> tak aby to jen zkontrolovalo povolenou akci a udelalo z ni ServiceName
 Refaktorovat SaveNew[Item|Gain] -> udelat FormHandler
 Refaktorovat FundControl
@@ -14,7 +13,7 @@ Action by mela vracet view()
 
 ===============================
 
-další funkènost:
+dalÅ¡Ã­ funkÄnost:
 - statistiky
 	- mesicni (vyber mesice)
 	- celkove
