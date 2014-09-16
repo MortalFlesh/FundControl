@@ -26,7 +26,7 @@ class GainsDbMapper {
 	 * @return Gain[]
 	 */
 	public function loadGains($userId) {
-		$res = $this->Db->query("SELECT `gain_data`, `time`
+		$res = $this->Db->query("SELECT `id`, `gain_data`, `time`
 			FROM `" . $this->Db->getPrefix() . "gains`
 			WHERE `user_id` = " . (int)$userId);
 
