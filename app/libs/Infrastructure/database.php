@@ -4,32 +4,39 @@ class Database {
 	const TIME_FORMAT = 'Y-m-d H:i:s';
 
 	private $connection, $lastQuery;
+    private $host, $user, $password, $database, $encoding;
 
 	/** @var LogWriter */
 	private $Log;
 
 	public function __construct(Config $Config, LogWriter $Log) {
 		$dbConfig = $Config->getDbConfig();
-		$host = $dbConfig['host'];
-		$user = $dbConfig['user'];
-		$password = $dbConfig['password'];
-		$database = $dbConfig['database'];
-		$encoding = $dbConfig['encoding'];
+		$this->host = $dbConfig['host'];
+		$this->user = $dbConfig['user'];
+		$this->password = $dbConfig['password'];
+		$this->database = $dbConfig['database'];
+		$this->encoding = $dbConfig['encoding'];
 
-		$this->connection = mysql_connect($host, $user, $password);
-		$this->Log = $Log;
-
-		if ($this->connection === false) {
-			$this->log('connectoion false');
-			exit;
-		}
-
-		$this->query("USE `{$database}`");
-
-		if (!empty($encoding)) {
-			$this->query("SET NAMES {$encoding}");
-		}
+        $this->Log = $Log;
 	}
+
+    private function connect(){
+        if (isset($this->connection)) {
+            return;
+        }
+        $this->connection = mysql_connect($this->host, $this->user, $this->password);
+
+        if ($this->connection === false) {
+            $this->log('connectoion false');
+            exit;
+        }
+
+        $this->query("USE `{$this->database}`");
+
+        if (!empty($this->encoding)) {
+            $this->query("SET NAMES {$this->encoding}");
+        }
+    }
 
 	private function log($msg) {
 		$data = array(
@@ -40,6 +47,7 @@ class Database {
 	}
 
 	public function query($sql) {
+        $this->connect();
 		$this->lastQuery = $sql;
 		$resource = mysql_query($sql, $this->connection);
 

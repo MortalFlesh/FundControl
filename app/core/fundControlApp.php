@@ -19,6 +19,10 @@ $FundControl = $ServiceFactory->getServiceByName('FundControl');
 
 // ================= process requests =================
 
-$MainController = $ServiceFactory->getServiceByName('MainController');
-/* @var $MainController MainController */
-$MainController->checkActions();
+$initMainController = (isset($withoutMainController) && $withoutMainController === true ? false : true);
+
+if ($initMainController) {
+    $MainController = $ServiceFactory->getServiceByName('MainController');
+    /* @var $MainController MainController */
+    $MainController->checkActions();
+}
