@@ -4,3 +4,4 @@
 /app/cache
 !/app/cache/.htaccess
 /.idea/
+/bower_components
