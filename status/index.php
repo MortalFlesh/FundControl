@@ -5,10 +5,18 @@ $rootDir = __DIR__ . '/../app/';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
 
-$JavascriptAutoloader = new JavascriptAutoloader();
+$statusRootDir = __DIR__ . '/';
+$statusHomeUrl = str_replace('app', 'status', $FundControl->getHomeUrl());
+
+$JavascriptAutoloader = new JavascriptAutoloader(new JAPrinter($statusHomeUrl));
 $JavascriptAutoloader
-    ->setRootDir(__DIR__ . '/')
-    ->setHomeUrl(str_replace('app', 'status', $FundControl->getHomeUrl()));
+    ->setRootDir($statusRootDir)
+    ->setCompileToOneFile(new JACompiler($statusRootDir, 'cache'))
+    ->setMinifyOutput(new JAMinify($statusRootDir));
+
+if (isset($_GET['denyCache']) && (int)$_GET['denyCache'] === 1) {
+    $JavascriptAutoloader->setDenyCache();
+}
 
 ?>
 <!-- index.html -->
