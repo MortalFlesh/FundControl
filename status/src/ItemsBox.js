@@ -13,13 +13,11 @@ var ItemsBox = React.createClass({
                 itemsData.push(value);
             });
             this.setState({data: itemsData});
-        }.bind(this))
-        .error(function (xhr, status, err) {
-            console.error(this.props.url, status, err.toString());
         }.bind(this));
     },
     componentDidMount: function () {
         this.loadItemsFromServer();
+        setInterval(this.loadItemsFromServer, this.props.interval);
     },
 
     render: function () {
