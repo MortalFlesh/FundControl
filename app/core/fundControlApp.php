@@ -1,6 +1,5 @@
 <?php
 session_start();
-error_reporting(E_ALL ^ E_NOTICE);
 
 // ================= initialization =================
 
@@ -13,6 +12,14 @@ $Loader->setCacheStorage(new Nette\Caching\Storages\FileStorage($rootDir . 'cach
 $Loader->register();
 
 $ServiceFactory = new ServiceFactory($rootDir);
+
+$Config = $ServiceFactory->getServiceByName('Config');
+/* @var $Config Config */
+
+if ($Config->isDebug()) {
+	error_reporting(E_ALL ^ E_DEPRECATED);
+	ini_set('display_errors', 1);
+}
 
 $FundControl = $ServiceFactory->getServiceByName('FundControl');
 /* @var $FundControl Fundcontrol */

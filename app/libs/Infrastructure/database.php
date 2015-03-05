@@ -9,16 +9,20 @@ class Database {
 	/** @var LogWriter */
 	private $Log;
 
-	public function __construct(Config $Config, LogWriter $Log) {
-		$dbConfig = $Config->getDbConfig();
-		$this->host = $dbConfig['host'];
-		$this->user = $dbConfig['user'];
-		$this->password = $dbConfig['password'];
-		$this->database = $dbConfig['database'];
-		$this->encoding = $dbConfig['encoding'];
+	/** @var Config */
+	private $Config;
 
+	public function __construct(Config $Config, LogWriter $Log) {
+        $this->Config = $Config;
         $this->Log = $Log;
-	}
+
+        $dbConfig = $this->Config->getDbConfig();
+        $this->host = $dbConfig['host'];
+        $this->user = $dbConfig['user'];
+        $this->password = $dbConfig['password'];
+        $this->database = $dbConfig['database'];
+        $this->encoding = $dbConfig['encoding'];
+    }
 
     private function connect(){
         if (isset($this->connection)) {
@@ -65,7 +69,7 @@ class Database {
 	}
 
 	public function fetchAssoc($resource) {
-		return ($resource !== false ? mysql_fetch_assoc($resource) : array());
+		return ($resource !== false ? mysql_fetch_assoc($resource) : []);
 	}
 
 	public function rows($resource) {
@@ -93,5 +97,9 @@ class Database {
 
 	public function lastInsertedId() {
 		return mysql_insert_id($this->connection);
+	}
+
+	public function getPrefix() {
+		return $this->Config->getPrefix();
 	}
 }

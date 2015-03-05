@@ -1,4 +1,4 @@
 <?php
 
-interface IActionException extends Exception {
+interface IActionException {
 }

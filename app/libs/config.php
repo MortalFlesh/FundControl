@@ -26,6 +26,11 @@ class Config {
 	}
 
 	/** @return string */
+	public function getPrefix() {
+		return $this->config['db']['prefix'];
+	}
+
+	/** @return string */
 	public function getHomeUrl() {
 		return $this->config['homeUrl'];
 	}

@@ -23,7 +23,7 @@ class AjaxActionGetFlashMessages implements IAjaxAction {
 	public function run() {
 		$flashes = $this->Flashes->getFlashes();
 
-		$flashesData = array();
+		$flashesData = [];
 		foreach($flashes as $FlashMessage) {
 			$flashesData[] = $FlashMessage->serialize();
 		}

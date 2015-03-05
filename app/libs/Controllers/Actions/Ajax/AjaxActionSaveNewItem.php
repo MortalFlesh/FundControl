@@ -10,17 +10,17 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	/** @var UserAuthorizeFacade */
 	private $Authorize;
 
-	/** @var ItemsService */
-	private $ItemService;
+	/** @var AddNewItemFacade */
+	private $AddNewItem;
 
-	private $data = array();
+	private $data = [];
 	private $status;
 
-	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, UserAuthorizeFacade $Authorize, ItemsService $ItemService) {
+	public function __construct(JsonPrinter $JsonPrinter, FlashMessagesFacade $Flashes, UserAuthorizeFacade $Authorize, AddNewItemFacade $ItemService) {
 		$this->JsonPrinter = $JsonPrinter;
 		$this->Flashes = $Flashes;
 		$this->Authorize = $Authorize;
-		$this->ItemService = $ItemService;
+		$this->AddNewItem = $ItemService;
 	}
 
 	public function assignData($data) {
@@ -43,8 +43,8 @@ class AjaxActionSaveNewItem implements IAjaxAction {
 	/** @param int $userId */
 	private function trySaveForm($userId) {
 		try {
-			$messages = $this->ItemService
-				->saveItemForm($userId, $this->data)
+			$messages = $this->AddNewItem
+				->saveForm($this->data, $userId)
 				->getMessagesAndClear();
 
 			foreach($messages as $message) {

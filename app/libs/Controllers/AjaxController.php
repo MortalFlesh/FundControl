@@ -1,7 +1,7 @@
 <?php
 
 class AjaxController implements IController {
-	private $data = array();
+	private $data = [];
 
 	/** @var AjaxActionsFactory */
 	private $Factory;
@@ -32,9 +32,11 @@ class AjaxController implements IController {
 
 	private function runAction() {
 		try {
+			$data = (empty($this->data['data']) ? [] : $this->data['data']);
+
 			$AjaxAction = $this->Factory->getAction($this->data['action']);
 			$AjaxAction
-				->assignData($this->data['data'])
+				->assignData($data)
 				->run();
 		} catch (AjaxActionNotFoundException $Exception) {
 			echo 'ERROR: ' . $Exception->getMessage();

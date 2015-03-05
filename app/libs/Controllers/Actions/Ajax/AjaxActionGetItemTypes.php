@@ -4,16 +4,12 @@ class AjaxActionGetItemTypes implements IAjaxAction {
 	/** @var JsonPrinter */
 	private $JsonPrinter;
 
-	/** @var FundControl */
-	private $FundControl;
+	/** @var ItemTypesFacade */
+	private $ItemTypes;
 
-	/** @var ItemTypesService */
-	private $ItemTypesService;
-
-	public function __construct(JsonPrinter $JsonPrinter, FundControl $FundControl, ItemTypesService $ItemTypesService) {
+	public function __construct(JsonPrinter $JsonPrinter, ItemTypesFacade $ItemTypes) {
 		$this->JsonPrinter = $JsonPrinter;
-		$this->FundControl = $FundControl;
-		$this->ItemTypesService = $ItemTypesService;
+		$this->ItemTypes = $ItemTypes;
 	}
 
 	public function assignData($data) {
@@ -21,8 +17,7 @@ class AjaxActionGetItemTypes implements IAjaxAction {
 	}
 
 	public function run() {
-		$types = $this->ItemTypesService->getItemTypes();
-		$serializedTypes = $this->ItemTypesService->serializeItemTypes($types);
-		$this->JsonPrinter->printAsJsonAndDie($serializedTypes);
+		$types = $this->ItemTypes->getSerializedItemTypes();
+		$this->JsonPrinter->printAsJsonAndDie($types);
 	}
 }

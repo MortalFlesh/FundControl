@@ -4,9 +4,6 @@ class FundControl {
 	/** @var Config */
 	private $Config;
 
-	/** @var FlashMessagesFacade */
-	private $Flashes;
-
 	/** @var UserAuthorizeFacade */
 	private $Authorize;
 
@@ -15,9 +12,8 @@ class FundControl {
 	 * @param FlashMessagesFacade $Flashes
 	 * @param UserAuthorizeFacade $Authorize
 	 */
-	public function __construct(Config $Config, FlashMessagesFacade $Flashes, UserAuthorizeFacade $Authorize) {
+	public function __construct(Config $Config, UserAuthorizeFacade $Authorize) {
 		$this->Config = $Config;
-		$this->Flashes = $Flashes;
 		$this->Authorize = $Authorize;
 	}
 
@@ -60,19 +56,12 @@ class FundControl {
 		return $rootDir . 'views/inline/' . $viewName . '.php';
 	}
 
-	/** @return FlashMessage[] */
-	public function getFlashes() {
-		return $this->FlashMessagesRepository->getFlashes();
-	}
-
 	/**
 	 * If user is not logged, this will kill the script and show error message
 	 */
 	public function requireLogin() {
 		if (!$this->isLogged()) {
-			$this->Flashes->flashError('This page need login!');
-			$this->view('flashesServer');
-			exit;
+			die('This page need login!');
 		}
 	}
 }

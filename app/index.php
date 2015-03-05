@@ -3,10 +3,14 @@ $rootDir = __DIR__ . '/';
 require_once $rootDir . 'core/fundControlApp.php';
 /* @var $FundControl FundControl */
 
-$JavascriptAutoloader = new JavascriptAutoloader();
+$JavascriptAutoloader = new JavascriptAutoloader(new JAPrinter($FundControl->getHomeUrl()));
+$JavascriptAutoloader
+	->setRootDir($rootDir)
+	->setCompileToOneFile(new JACompiler($rootDir, 'cache/js'))
+	->setMinifyOutput(new JAMinify($rootDir));
 ?>
 <!doctype html>
-<html lang="cs">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<base href="/app/" />
@@ -27,6 +31,7 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 
 		<script type="text/javascript">
 			var homeUrl = '<?=$FundControl->getHomeUrl()?>';
+			var logged = <?=($FundControl->isLogged() ? 'true' : 'false')?>;
 		</script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
@@ -34,10 +39,8 @@ $JavascriptAutoloader = new JavascriptAutoloader();
 		<script src="<?=$FundControl->getHomeUrl()?>../dist/js/mobile-angular-ui.min.js"></script>
 		<?
 		$JavascriptAutoloader
-			->setHomeUrl($FundControl->getHomeUrl())
-			->setRootDir($rootDir)
 			->addDirectory('scripts')
-			->addDirectory('scripts/models')
+			->addDirectory('scripts/models', $recursively = true)
 			->addDirectory('scripts/services')
 			->addDirectory('scripts/directives')
 			->addDirectory('scripts/controllers')
