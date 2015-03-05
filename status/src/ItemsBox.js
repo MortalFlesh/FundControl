@@ -23,7 +23,6 @@ var ItemsBox = React.createClass({
     render: function () {
         return (
             <div className="itemsBox">
-                <h1>Items status</h1>
                 <ItemsList data={this.state.data} />
             </div>
         );

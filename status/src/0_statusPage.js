@@ -35,6 +35,7 @@ var StatusPage = React.createClass({
     render: function () {
         return (
             <div className="statusPage">
+                <h1>Items status</h1>
                 <MoneyFlowBar gainTotal={this.state.gainTotal} itemsTotal={this.state.itemsTotal} />
                 <ItemsBox url={this.props.actions.getItems} interval={this.props.interval} />
             </div>
