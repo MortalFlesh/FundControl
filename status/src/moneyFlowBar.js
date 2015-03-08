@@ -6,7 +6,7 @@ var MoneyFlowBar = React.createClass({
         } else if (percent > 100) {
             return 100;
         } else {
-            return percent;
+            return Math.round(percent * 100) / 100;
         }
     },
     render: function() {
