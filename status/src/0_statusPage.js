@@ -1,13 +1,15 @@
 var StatusPage = React.createClass({
     getInitialState: function () {
         return {
-            gainTotal: 0,
+            items: [],
+            gains: [],
+            gainsTotal: 0,
             itemsTotal: 0,
         };
     },
     loadDataFromServer: function () {
-        this.ajaxLoad('gainTotal', this.props.actions.getGains);
-        this.ajaxLoad('itemsTotal', this.props.actions.getItems);
+        this.ajaxLoad('gains', this.props.actions.getGains);
+        this.ajaxLoad('items', this.props.actions.getItems);
     },
     ajaxLoad: function (type, actionUrl) {
         $.ajax({
@@ -15,14 +17,32 @@ var StatusPage = React.createClass({
             dataType: 'json',
         })
             .done(function (data) {
-                var totalValue = 0;
+                var currentTotalValue = 0;
                 $.each(data, function (key, value) {
-                    totalValue += parseFloat(value.amount);
+                    currentTotalValue += parseFloat(value.amount);
+                });
+
+                var currentData = [];
+                $.each(data, function (key, value) {
+                    currentData.push(value);
                 });
 
                 var state = this.state;
-                if (state[type] !== totalValue) {
-                    state[type] = totalValue;
+                var stateChanged = false;
+
+                var typeTotal = type + 'Total';
+
+                if (state[typeTotal] !== currentTotalValue) {
+                    state[typeTotal] = currentTotalValue;
+                    stateChanged = true;
+                }
+
+                if (state[type] !== currentData) {
+                    state[type] = currentData;
+                    stateChanged = true;
+                }
+
+                if (stateChanged) {
                     this.setState(state);
                 }
             }.bind(this));
@@ -36,8 +56,8 @@ var StatusPage = React.createClass({
         return (
             <div className="statusPage">
                 <h1>Items status</h1>
-                <MoneyFlowBar gainTotal={this.state.gainTotal} itemsTotal={this.state.itemsTotal} />
-                <ItemsBox url={this.props.actions.getItems} interval={this.props.interval} />
+                <MoneyFlowBar gainTotal={this.state.gainsTotal} itemsTotal={this.state.itemsTotal} />
+                <ItemsBox items={this.state.items} />
             </div>
         );
     }
