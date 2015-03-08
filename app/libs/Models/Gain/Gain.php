@@ -1,5 +1,7 @@
 <?php
 
+use \DateTime;
+
 class Gain {
 	private $name;
 
@@ -35,8 +37,24 @@ class Gain {
 			'name' => $this->name,
 			'gainType' => $this->Type->serialize(),
 			'amount' => $this->amount,
+			'time' => $this->serializeTime($this->CreatedTime),
 		];
 		
 		return ArrayFunctions::arrayToJson($data);
 	}
+
+    /**
+     * @param DateTime $Time
+     * @return array
+     */
+    private function serializeTime(DateTime $Time){
+        return [
+            'day' => $Time->format('d'),
+            'month' => $Time->format('m'),
+            'year' => $Time->format('Y'),
+            'hour' => $Time->format('H'),
+            'minute' => $Time->format('i'),
+            'second' => $Time->format('s'),
+        ];
+    }
 }
