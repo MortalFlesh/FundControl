@@ -13,7 +13,7 @@ var Filter = React.createClass({
                 <label>
                     {this.props.title + ':' + nbsp}
                     <select onChange={this.props.filterOnChange} defaultValue={this.props.selectedValue}>
-                        <option value=''>{'-- without filter --'}</option>
+                        <option value=''>{'-- all --'}</option>
                         {options}
                     </select>
                 </label>
