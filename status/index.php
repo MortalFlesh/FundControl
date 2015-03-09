@@ -18,15 +18,20 @@ if (isset($_GET['denyCache']) && (int)$_GET['denyCache'] === 1) {
     $JavascriptAutoloader->setDenyCache();
 }
 
+$JSCoreLoader = new JavascriptAutoloader(new JAPrinter($statusHomeUrl));
+$JSCoreLoader
+    ->setRootDir($statusRootDir)
+    ->setCompileToOneFile(new JACompiler($statusRootDir, 'cache'));
 ?>
 <!-- index.html -->
 <html>
 <head>
     <title>Hello React</title>
-    <script src="//fb.me/react-0.12.2.js"></script>
-    <script src="//fb.me/JSXTransformer-0.12.2.js"></script>
-    <script src="//code.jquery.com/jquery-1.10.0.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+    <?php
+    $JSCoreLoader
+        ->addDirectory('src/core')
+        ->autoload();
+    ?>
 </head>
 <body>
 <div id="content"></div>
