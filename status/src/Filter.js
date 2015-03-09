@@ -1,6 +1,5 @@
 var Filter = React.createClass({
     render: function() {
-        console.log(this.props.values);
         var options = this.props.values.map(function (value) {
             return (
                 <option value={value}>
@@ -13,7 +12,8 @@ var Filter = React.createClass({
             <div className="Filter">
                 <label>
                     {this.props.title + ':' + nbsp}
-                    <select>
+                    <select onChange={this.props.filterOnChange} defaultValue={this.props.selectedValue}>
+                        <option value=''>{'-- without filter --'}</option>
                         {options}
                     </select>
                 </label>
