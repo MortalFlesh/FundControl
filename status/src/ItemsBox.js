@@ -6,11 +6,27 @@ var ItemsBox = React.createClass({
         }
     },
     componentDidUpdate: function() {
+        var state = {};
+        var stateChanged = false;
+
         if (this.state.selectedItemType === '' && this.state.items !== this.props.items) {
-            this.setState({items: this.props.items});
+            state.items = this.props.items;
+            stateChanged = true;
         } else if (this.state.selectedItemType !== '') {
-            this.setState({items: this.filterItemsByType(this.props.items,this.state.selectedItemType)});
+            state.items = this.filterItemsByType(this.props.items,this.state.selectedItemType);
+            stateChanged = true;
         }
+
+        if (stateChanged) {
+            this.setState(state);
+        }
+    },
+    getTotalAmount: function(data) {
+        var totalAmount = 0;
+        $.each(data, function (key, value) {
+            totalAmount += parseFloat(value.amount);
+        });
+        return totalAmount;
     },
     parseItemTypes: function (items) {
         var types = [];
@@ -49,6 +65,7 @@ var ItemsBox = React.createClass({
     },
     render: function () {
         var itemTypes = this.parseItemTypes(this.props.items);
+        var itemsTotal = this.getTotalAmount(this.state.items);
 
         return (
             <div className="itemsBox">
@@ -58,6 +75,10 @@ var ItemsBox = React.createClass({
                         values={itemTypes}
                         filterOnChange={this.filterItemTypes}
                         selectedValue={this.state.selectedItemType} />
+                </div>
+
+                <div clasName="itemsTotal" style={{padding: '10px 0'}}>
+                    Total amount: <strong>{itemsTotal}</strong>
                 </div>
 
                 <ItemsList data={this.state.items} />
