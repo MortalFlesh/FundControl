@@ -1,9 +1,9 @@
 var Filter = React.createClass({
     render: function() {
-        var options = this.props.values.map(function (value) {
+        var options = this.props.values.map(function (option) {
             return (
-                <option value={value}>
-                    {value}
+                <option value={option.id}>
+                    {option.name}
                 </option>
             );
         });

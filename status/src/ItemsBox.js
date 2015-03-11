@@ -2,18 +2,18 @@ var ItemsBox = React.createClass({
     getInitialState: function () {
         return {
             items: [],
-            selectedItemType: '',
+            selectedItemTypeId: '',
         }
     },
     componentDidUpdate: function() {
         var state = {};
         var stateChanged = false;
 
-        if (this.state.selectedItemType === '' && this.state.items !== this.props.items) {
+        if (this.state.selectedItemTypeId === '' && this.state.items !== this.props.items) {
             state.items = this.props.items;
             stateChanged = true;
-        } else if (this.state.selectedItemType !== '') {
-            state.items = this.filterItemsByType(this.props.items,this.state.selectedItemType);
+        } else if (this.state.selectedItemTypeId !== '') {
+            state.items = this.filterItemsByType(this.props.items,this.state.selectedItemTypeId);
             stateChanged = true;
         }
 
@@ -30,34 +30,36 @@ var ItemsBox = React.createClass({
     },
     parseItemTypes: function (items) {
         var types = [];
+        var typeIds = [];
         for (var key in items) {
-            var typeName = items[key].itemType.name;
+            var type = items[key].itemType;
 
-            if (types.indexOf(typeName) >= 0) {
+            if (typeIds.indexOf(type.id) >= 0) {
                 continue;
             }
 
-            types.push(typeName);
+            types.push(type);
+            typeIds.push(type.id);
         }
         return types;
     },
     filterItemTypes: function (event) {
-        var selectedType = event.target.value;
+        var selectedTypeId = event.target.value;
 
-        if (this.state.selectedItemType !== selectedType) {
-            var filteredItems = this.filterItemsByType(this.props.items, selectedType);
+        if (this.state.selectedItemTypeId !== selectedTypeId) {
+            var filteredItems = this.filterItemsByType(this.props.items, selectedTypeId);
             this.setState({
-                selectedItemType: selectedType,
+                selectedItemTypeId: selectedTypeId,
                 items: filteredItems,
             });
         }
     },
-    filterItemsByType: function(items, selectedType) {
+    filterItemsByType: function(items, selectedTypeId) {
         var filteredItems = [];
         for (var key in items) {
             var item = items[key];
 
-            if (item.itemType.name === selectedType) {
+            if (item.itemType.id === selectedTypeId) {
                 filteredItems.push(item);
             }
         }
@@ -74,7 +76,7 @@ var ItemsBox = React.createClass({
                         title="Item type"
                         values={itemTypes}
                         filterOnChange={this.filterItemTypes}
-                        selectedValue={this.state.selectedItemType} />
+                        selectedValue={this.state.selectedItemTypeId} />
                 </div>
 
                 <div clasName="itemsTotal" style={{padding: '10px 0'}}>
