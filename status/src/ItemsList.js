@@ -1,5 +1,7 @@
+import React from 'react';
+
 var ItemsList = React.createClass({
-    render: function () {
+    render() {
         var items = this.props.data.map(function (item) {
             return (
                 <Item item={item} />
@@ -13,3 +15,5 @@ var ItemsList = React.createClass({
         );
     }
 });
+
+export default ItemsList;

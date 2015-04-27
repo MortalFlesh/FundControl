@@ -1,5 +1,7 @@
+import React from 'react';
+
 var Item = React.createClass({
-    render: function () {
+    render() {
         var item = this.props.item;
 
         var style = {
@@ -45,3 +47,5 @@ var Item = React.createClass({
         );
     }
 });
+
+export default Item;

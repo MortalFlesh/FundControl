@@ -1,9 +1,12 @@
+import React from 'react';
+import Style from './style';
+
 var TimeFilter = React.createClass({
-    render: function() {
+    render() {
         return (
             <div className="TimeFilter">
                 <label>
-                    {this.props.title + ':' + nbsp}
+                    {this.props.title + ':' + Style.nbsp}
                     <input type="text"
                         name={this.props.name}
                         value={this.props.time}
@@ -14,3 +17,5 @@ var TimeFilter = React.createClass({
         );
     }
 });
+
+export default TimeFilter;

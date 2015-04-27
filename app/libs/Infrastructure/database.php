@@ -92,6 +92,7 @@ class Database {
 	}
 
 	public function escape($string) {
+        return $string;
 		return mysql_real_escape_string($string, $this->connection);
 	}
 

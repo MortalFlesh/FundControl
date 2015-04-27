@@ -6,13 +6,13 @@ class Config {
 			'host' => 'localhost',
 			'user' => 'root',
 			'password' => '',
-			'database' => 'fundcontrol',
+			'database' => 'fundcontrol_dummy',
 			'encoding' => 'utf8',
 			'prefix' => 'fundcontrol_',
 		),
-		'homeUrl' => 'http://fundcontrol/app/',
+		'homeUrl' => 'http://localhost/FundControl/app/',
 		'htmlTitle' => 'FundControl',
-		'debug' => false,
+		'debug' => true,
 		'rootDir' => '',
 	);
 

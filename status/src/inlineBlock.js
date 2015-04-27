@@ -1,5 +1,7 @@
+import React from 'react';
+
 var InlineBlock = React.createClass({
-    render: function() {
+    render() {
         var style = {
             display: 'inline-block',
             padding: 5,
@@ -19,3 +21,5 @@ var InlineBlock = React.createClass({
         );
     }
 });
+
+export default InlineBlock;

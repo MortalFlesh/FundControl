@@ -1,5 +1,8 @@
+import React from 'react';
+import Style from './style';
+
 var Filter = React.createClass({
-    render: function() {
+    render() {
         var options = this.props.values.map(function (option) {
             return (
                 <option value={option.id}>
@@ -11,7 +14,7 @@ var Filter = React.createClass({
         return (
             <div className="Filter">
                 <label>
-                    {this.props.title + ':' + nbsp}
+                    {this.props.title + ':' + Style.nbsp}
                     <select onChange={this.props.filterOnChange} defaultValue={this.props.selectedValue}>
                         <option value=''>{'-- all --'}</option>
                         {options}
@@ -21,3 +24,5 @@ var Filter = React.createClass({
         );
     }
 });
+
+export default Filter;

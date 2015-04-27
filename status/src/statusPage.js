@@ -1,5 +1,10 @@
+import React from 'react';
+import $ from 'jquery-browserify';
+import MoneyFlowBar from './moneyFlowBar';
+import ItemsBox from './ItemsBox';
+
 var StatusPage = React.createClass({
-    getInitialState: function () {
+    getInitialState() {
         return {
             items: [],
             gains: [],
@@ -7,11 +12,11 @@ var StatusPage = React.createClass({
             itemsTotal: 0,
         };
     },
-    loadDataFromServer: function () {
+    loadDataFromServer() {
         this.ajaxLoad('gains', this.props.actions.getGains);
         this.ajaxLoad('items', this.props.actions.getItems);
     },
-    ajaxLoad: function (type, actionUrl) {
+    ajaxLoad(type, actionUrl) {
         $.ajax({
             url: actionUrl,
             dataType: 'json',
@@ -47,12 +52,12 @@ var StatusPage = React.createClass({
                 }
             }.bind(this));
     },
-    componentDidMount: function () {
+    componentDidMount() {
         this.loadDataFromServer();
         setInterval(this.loadDataFromServer, this.props.interval);
     },
 
-    render: function () {
+    render() {
         return (
             <div className="statusPage">
                 <h1>Items status</h1>
@@ -62,3 +67,5 @@ var StatusPage = React.createClass({
         );
     }
 });
+
+export default StatusPage;

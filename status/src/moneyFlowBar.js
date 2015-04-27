@@ -1,3 +1,6 @@
+import React from 'react';
+import Style from './style';
+
 var MoneyFlowBar = React.createClass({
     getPercent: function(current, all) {
         var percent = (current / all) * 100;
@@ -58,15 +61,17 @@ var MoneyFlowBar = React.createClass({
         return(
             <div className="moneyFlowBar" style={style.container}>
                 <div className="total" style={style.total}>
-                {totalItemsSpending + nbsp} / {nbsp + totalGain}
+                {totalItemsSpending + Style.nbsp} / {Style.nbsp + totalGain}
                 </div>
                 <div className="progress" style={style.progress}>
-                    {gainLeft + nbsp + '(' + gainLeftPercent + nbsp + '%)'}
+                    {gainLeft + Style.nbsp + '(' + gainLeftPercent + Style.nbsp + '%)'}
                     <div className="bar" style={style.progressBar}>
-                        {totalItemsSpending + nbsp + '(' + spendingPercent + nbsp + '%)'}
+                        {totalItemsSpending + Style.nbsp + '(' + spendingPercent + Style.nbsp + '%)'}
                     </div>
                 </div>
             </div>
         );
     }
 });
+
+export default MoneyFlowBar;

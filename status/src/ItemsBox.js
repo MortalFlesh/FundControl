@@ -1,10 +1,18 @@
+import React from 'react';
+import $ from 'jquery-browserify';
+import InlineBlock from './inlineBlock';
+import Filter from './filter';
+import TimeFilter from './timeFilter';
+import ItemsList from './ItemsList';
+import Style from './style';
+
 var ItemsBox = React.createClass({
-    getInitialState: function () {
+    getInitialState() {
         var now = new Date();
 
         var currentDay = {
-            day: now.getDay(),
-            month: now.getMonth(),
+            day: now.getDate(),
+            month: now.getMonth() + 1,
             year: now.getFullYear(),
         };
 
@@ -12,11 +20,12 @@ var ItemsBox = React.createClass({
             return $.extend(true, {}, json, extend);
         };
 
-        var dateFrom = extendsJson(currentDay, {hour: 0, min: 0});
-        var dateTo = extendsJson(currentDay, {hour: now.getHours(), min: now.getMinutes()});
+        var dateFrom = extendsJson(currentDay, {day: 1, hour: 0, minute: 0});
+        var dateTo = extendsJson(currentDay, {hour: now.getHours(), minute: now.getMinutes()});
 
         return {
             items: [],
+            itemsByTime: [],
             selectedItemTypeId: '',
             selectedDate: {
                 from: {
@@ -33,12 +42,17 @@ var ItemsBox = React.createClass({
     componentDidUpdate: function() {
         var state = {};
         var stateChanged = false;
+        var items = this.filterItemsByTime(this.props.items, this.state.selectedDate.from.date, this.state.selectedDate.to.date);
+        console.log('props: ', this.props.items);
+        console.log('itemsByTime: ', items);
 
-        if (this.state.selectedItemTypeId === '' && this.state.items !== this.props.items) {
-            state.items = this.props.items;
+        if (this.state.selectedItemTypeId === '' && this.state.items !== items) {
+            state.items = items;
+            state.itemsByTime = items;
             stateChanged = true;
         } else if (this.state.selectedItemTypeId !== '') {
-            state.items = this.filterItemsByType(this.props.items,this.state.selectedItemTypeId);
+            state.items = this.filterItemsByType(items,this.state.selectedItemTypeId);
+            state.itemsByTime = items;
             stateChanged = true;
         }
 
@@ -53,7 +67,7 @@ var ItemsBox = React.createClass({
         });
         return totalAmount;
     },
-    parseItemTypes: function (items) {
+    parseItemTypes(items) {
         var types = [];
         var typeIds = [];
         for (var key in items) {
@@ -68,7 +82,7 @@ var ItemsBox = React.createClass({
         }
         return types;
     },
-    filterItemTypes: function (event) {
+    filterItemTypes(event) {
         var selectedTypeId = event.target.value;
 
         if (this.state.selectedItemTypeId !== selectedTypeId) {
@@ -106,6 +120,24 @@ var ItemsBox = React.createClass({
             this.setState(state);
         }
     },
+    filterItemsByTime: function(items, timeFrom, timeTo) {
+        var filteredItems = [];
+
+        for (var key in items) {
+            var item = items[key];
+            var itemDate = this.parseTimeToDate(item.time);
+            var timeFromDate = this.parseTimeToDate(timeFrom);
+            var timeToDate = this.parseTimeToDate(timeTo);
+
+            console.log('item: ', itemDate, '<=', timeToDate, ' && ', itemDate,' >= ',timeFromDate, ' = ', itemDate <= timeToDate && itemDate >= timeFromDate);
+
+            if (itemDate <= timeToDate && itemDate >= timeFromDate) {
+                filteredItems.push(item);
+            }
+        }
+
+        return filteredItems;
+    },
     parseTime: function(timeString) {
         var parts = timeString.replace(new RegExp(' ', 'g'), '').split('|');
 
@@ -131,15 +163,27 @@ var ItemsBox = React.createClass({
         time += ' | ';
         time += timeJson.hour < 10 ? '0' + timeJson.hour : timeJson.hour ;
         time += ':';
-        time += timeJson.min < 10 ? '0' + timeJson.min : timeJson.min;
+        time += timeJson.minute < 10 ? '0' + timeJson.minute : timeJson.minute;
 
         return time;
     },
-    render: function () {
-        var itemTypes = this.parseItemTypes(this.props.items);
+    parseTimeToDate: function(timeJson) {
+        var date = new Date();
+
+        date.setDate(parseInt(timeJson.day, 10));
+        date.setMonth(parseInt(timeJson.month, 10) - 1);
+        date.setFullYear(parseInt(timeJson.year, 10));
+        date.setHours(parseInt(timeJson.hour, 10));
+        date.setMinutes(parseInt(timeJson.minute, 10));
+        date.setSeconds(0);
+
+        return date;
+    },
+    render() {
+        var itemTypes = this.parseItemTypes(this.state.itemsByTime);
         var itemsTotal = this.getTotalAmount(this.state.items);
         var separator = function(separator) {
-            return nbsp + separator + nbsp
+            return Style.nbsp + separator + Style.nbsp
         };
 
         return (
@@ -186,3 +230,5 @@ var ItemsBox = React.createClass({
         );
     }
 });
+
+export default ItemsBox;
