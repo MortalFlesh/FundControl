@@ -4,65 +4,27 @@ import MoneyFlowBar from './moneyFlowBar';
 import ItemsBox from './ItemsBox';
 
 var StatusPage = React.createClass({
-    getInitialState() {
-        return {
-            items: [],
-            gains: [],
-            gainsTotal: 0,
-            itemsTotal: 0,
-        };
+    getAmount(item) {
+        return parseFloat(item.amount);
     },
-    loadDataFromServer() {
-        this.ajaxLoad('gains', this.props.actions.getGains);
-        this.ajaxLoad('items', this.props.actions.getItems);
+    total(values) {
+        return values
+            .map((item) => this.getAmount(item))
+            .reduce((previous, current) => previous + current, 0);
     },
-    ajaxLoad(type, actionUrl) {
-        $.ajax({
-            url: actionUrl,
-            dataType: 'json',
-        })
-            .done(function (data) {
-                var currentTotalValue = 0;
-                $.each(data, function (key, value) {
-                    currentTotalValue += parseFloat(value.amount);
-                });
-
-                var currentData = [];
-                $.each(data, function (key, value) {
-                    currentData.push(value);
-                });
-
-                var state = this.state;
-                var stateChanged = false;
-
-                var typeTotal = type + 'Total';
-
-                if (state[typeTotal] !== currentTotalValue) {
-                    state[typeTotal] = currentTotalValue;
-                    stateChanged = true;
-                }
-
-                if (state[type] !== currentData) {
-                    state[type] = currentData;
-                    stateChanged = true;
-                }
-
-                if (stateChanged) {
-                    this.setState(state);
-                }
-            }.bind(this));
-    },
-    componentDidMount() {
-        this.loadDataFromServer();
-        setInterval(this.loadDataFromServer, this.props.interval);
-    },
-
     render() {
+        const moneyFlow = {
+            gainTotal: this.total(this.props.gains),
+            itemsTotal: this.total(this.props.items),
+        };
+
+        ////<ItemsBox items={this.props.items} />
+
         return (
             <div className="statusPage">
                 <h1>Items status</h1>
-                <MoneyFlowBar gainTotal={this.state.gainsTotal} itemsTotal={this.state.itemsTotal} />
-                <ItemsBox items={this.state.items} />
+
+                <MoneyFlowBar {...moneyFlow} />
             </div>
         );
     }

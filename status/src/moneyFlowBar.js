@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './style';
 
 var MoneyFlowBar = React.createClass({
-    getPercent: function(current, all) {
+    getPercent(current, all) {
         var percent = (current / all) * 100;
         if (percent < 0) {
             return 0;
@@ -12,7 +12,7 @@ var MoneyFlowBar = React.createClass({
             return Math.round(percent * 100) / 100;
         }
     },
-    render: function() {
+    render() {
         var totalItemsSpending = this.props.itemsTotal;
         var totalGain = this.props.gainTotal;
 
@@ -61,12 +61,14 @@ var MoneyFlowBar = React.createClass({
         return(
             <div className="moneyFlowBar" style={style.container}>
                 <div className="total" style={style.total}>
-                {totalItemsSpending + Style.nbsp} / {Style.nbsp + totalGain}
+                    {`${totalItemsSpending}${Style.nbsp}/${Style.nbsp}${totalGain}`}
                 </div>
+
                 <div className="progress" style={style.progress}>
-                    {gainLeft + Style.nbsp + '(' + gainLeftPercent + Style.nbsp + '%)'}
+                    {`${gainLeft}${Style.nbsp}(${gainLeftPercent}${Style.nbsp}%)`}
+
                     <div className="bar" style={style.progressBar}>
-                        {totalItemsSpending + Style.nbsp + '(' + spendingPercent + Style.nbsp + '%)'}
+                        {`${totalItemsSpending}${Style.nbsp}(${spendingPercent}${Style.nbsp}%)`}
                     </div>
                 </div>
             </div>

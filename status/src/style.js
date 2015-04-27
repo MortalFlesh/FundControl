@@ -1,3 +1,3 @@
 export default {
-    npbs: '\u00a0',
+    nbsp: '\u00a0',
 };

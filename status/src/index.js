@@ -1,13 +1,15 @@
 import React from 'react';
-import StatusPage from './statusPage';
+import App from './app';
 
 var apiUrl = 'http://localhost/FundControl/app/api.php';
 var actions = {
     getItems: apiUrl + '?action=get-items',
     getGains: apiUrl + '?action=get-gains',
+    getGainTypes: apiUrl + '?action=get-gain-types',
+    getItemTypes: apiUrl + '?action=get-item-types',
 };
 
 React.render(
-    <StatusPage actions={actions} interval={50000} />,
+    <App actions={actions} interval={50000} />,
     document.getElementById('content')
 );
