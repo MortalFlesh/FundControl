@@ -6,16 +6,21 @@ const Item = React.createClass({
 
     render() {
         const item = this.props.item;
+        const itemTime = JSON.stringify(item.time);
 
         const style = {
             Item: {
                 padding: 10,
                 border: '1px solid black',
                 width: 400,
-                height: 100,
+                height: 120,
                 float: 'left',
                 marginRight: 20,
                 marginBottom: 20,
+                borderRadius: 10,
+            },
+            itemTime: {
+                fontSize: 10,
             },
             ItemRow: {
                 paddingTop: 5,
@@ -33,6 +38,10 @@ const Item = React.createClass({
             <div className="item" style={style.Item}>
                 <h2 className="itemName">
                     {item.name}
+                    <br/>
+                    <em style={style.itemTime}>
+                        {itemTime}
+                    </em>
                 </h2>
 
                 <div style={style.ItemRow}>
