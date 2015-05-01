@@ -1,15 +1,15 @@
 import React from 'react';
+import {addons} from 'react/addons';
 import Style from './style';
 
-var Filter = React.createClass({
+const Filter = React.createClass({
+    mixins: [addons.PureRenderMixin],
     render() {
-        var options = this.props.values.map(function (option) {
-            return (
-                <option value={option.id}>
-                    {option.name}
-                </option>
-            );
-        });
+        const options = this.props.values.map((option, i) =>
+            <option key={i} value={option.id}>
+                {option.name}
+            </option>
+        );
 
         return (
             <div className="Filter">

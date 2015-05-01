@@ -10,9 +10,11 @@ var StatusPage = React.createClass({
         return parseFloat(item.amount);
     },
     total(values) {
-        return values
+        const total = values
             .map((item) => this.getAmount(item))
             .reduce((previous, current) => previous + current, 0);
+
+        return total || 0;
     },
     render() {
         const moneyFlow = {
@@ -39,9 +41,9 @@ var StatusPage = React.createClass({
             <div className="statusPage">
                 <h1>Items status</h1>
 
-                <ItemsBox {...itemBox} />
-
                 <MoneyFlowBar {...moneyFlow} />
+
+                <ItemsBox {...itemBox} />
             </div>
         );
     }

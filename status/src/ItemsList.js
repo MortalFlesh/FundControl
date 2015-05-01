@@ -1,8 +1,11 @@
 import React from 'react';
+import {addons} from 'react/addons';
+import Item from './item';
 
-var ItemsList = React.createClass({
+const ItemsList = React.createClass({
+    mixins: [addons.PureRenderMixin],
     render() {
-        const items = this.props.items.map((item) => <Item item={item} />);
+        const items = this.props.items.map((item, i) => <Item key={i} item={item} />);
 
         return (
             <div className="itemsList">

@@ -1,8 +1,21 @@
 import React from 'react';
+import {addons} from 'react/addons';
 
-var InlineBlock = React.createClass({
+const InlineBlock = React.createClass({
+    mixins: [addons.PureRenderMixin],
+
+    propTypes: {
+        noBorder: React.PropTypes.bool,
+    },
+
+    getDefaultProps() {
+        return {
+            noBorder: false,
+        };
+    },
+
     render() {
-        var style = {
+        const style = {
             display: 'inline-block',
             padding: 5,
             border: '1px solid black',

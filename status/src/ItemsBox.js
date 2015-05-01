@@ -1,4 +1,5 @@
 import React from 'react';
+import {addons} from 'react/addons';
 import $ from 'jquery-browserify';
 import InlineBlock from './inlineBlock';
 import Filter from './filter';
@@ -8,6 +9,8 @@ import Style from './style';
 import {List} from 'immutable';
 
 const ItemsBox = React.createClass({
+    mixins: [addons.PureRenderMixin],
+
     propTypes: {
         items: React.PropTypes.instanceOf(List).isRequired,
         selectedDate: React.PropTypes.object.isRequired,
@@ -18,8 +21,8 @@ const ItemsBox = React.createClass({
 
     getTotalAmount(items) {
         return items
-            .map((item) => parseFloat(item.get('amount')))
-            .reduce((prev, curr) => prev + curr);
+                .map((item) => parseFloat(item.get('amount')))
+                .reduce((prev, curr) => prev + curr, 0) || 0;
     },
 
     parseItemTypes(items) {
@@ -28,10 +31,10 @@ const ItemsBox = React.createClass({
 
         items.forEach((item) => {
             const type = item.get('itemType');
-            const typeId = type.get('id');
+            const typeId = type.id;
 
             if (typeIds.indexOf(typeId) < 0) {
-                typeIds.push(type.get('id'));
+                typeIds.push(typeId);
                 types = types.push(type);
             }
         });
@@ -152,7 +155,7 @@ const ItemsBox = React.createClass({
                                 title="Date from"
                                 name="from"
                                 time={timeFrom}
-                                handleChange={this.handleFilterByTime}
+                                onChange={this.handleFilterByTime}
                             />
                         </InlineBlock>
 
@@ -161,7 +164,7 @@ const ItemsBox = React.createClass({
                                 title="to"
                                 name="to"
                                 time={timeTo}
-                                handleChange={this.handleFilterByTime}
+                                onChange={this.handleFilterByTime}
                             />
                         </InlineBlock>
                     </InlineBlock>

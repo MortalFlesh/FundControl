@@ -1,10 +1,13 @@
 import React from 'react';
+import {addons} from 'react/addons';
 
-var Item = React.createClass({
+const Item = React.createClass({
+    mixins: [addons.PureRenderMixin],
+
     render() {
-        var item = this.props.item;
+        const item = this.props.item;
 
-        var style = {
+        const style = {
             Item: {
                 padding: 10,
                 border: '1px solid black',
@@ -31,16 +34,18 @@ var Item = React.createClass({
                 <h2 className="itemName">
                     {item.name}
                 </h2>
+
                 <div style={style.ItemRow}>
                     <div style={style.ItemRowCol}>
                         Amount: {item.amount}
                     </div>
-                    <div style={style.ItemRowCol}>
-                        |
-                    </div>
+
+                    <div style={style.ItemRowCol}>|</div>
+
                     <div style={style.ItemRowCol}>
                         Type: {item.itemType.name}
                     </div>
+
                     <div style={style.clear} />
                 </div>
             </div>

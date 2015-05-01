@@ -1,7 +1,10 @@
 import React from 'react';
+import {addons} from 'react/addons';
 import Style from './style';
 
 var MoneyFlowBar = React.createClass({
+    mixins: [addons.PureRenderMixin],
+
     getPercent(current, all) {
         var percent = (current / all) * 100;
         if (percent < 0) {
@@ -12,6 +15,7 @@ var MoneyFlowBar = React.createClass({
             return Math.round(percent * 100) / 100;
         }
     },
+
     render() {
         var totalItemsSpending = this.props.itemsTotal;
         var totalGain = this.props.gainTotal;
@@ -58,7 +62,7 @@ var MoneyFlowBar = React.createClass({
             },
         };
 
-        return(
+        return (
             <div className="moneyFlowBar" style={style.container}>
                 <div className="total" style={style.total}>
                     {`${totalItemsSpending}${Style.nbsp}/${Style.nbsp}${totalGain}`}
