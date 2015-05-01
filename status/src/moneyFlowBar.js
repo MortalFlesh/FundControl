@@ -1,6 +1,7 @@
 import React from 'react';
 import {addons} from 'react/addons';
 import Style from './style';
+import Price from './price';
 
 var MoneyFlowBar = React.createClass({
     mixins: [addons.PureRenderMixin],
@@ -65,14 +66,18 @@ var MoneyFlowBar = React.createClass({
         return (
             <div className="moneyFlowBar" style={style.container}>
                 <div className="total" style={style.total}>
-                    {`${totalItemsSpending}${Style.nbsp}/${Style.nbsp}${totalGain}`}
+                    <Price price={totalItemsSpending}/>
+                    {`${Style.nbsp}/${Style.nbsp}`}
+                    <Price price={totalGain}/>
                 </div>
 
                 <div className="progress" style={style.progress}>
-                    {`${gainLeft}${Style.nbsp}(${gainLeftPercent}${Style.nbsp}%)`}
+                    <Price price={gainLeft} />
+                    {`${Style.nbsp}(${gainLeftPercent}%)`}
 
                     <div className="bar" style={style.progressBar}>
-                        {`${totalItemsSpending}${Style.nbsp}(${spendingPercent}${Style.nbsp}%)`}
+                        <Price price={totalItemsSpending}/>
+                        {`${Style.nbsp}(${spendingPercent}%)`}
                     </div>
                 </div>
             </div>
