@@ -19,7 +19,7 @@ const App = React.createClass({
         state.reload('itemTypes', this.props.actions.getItemTypes);
     },
     render() {
-        const items = store.getItems().toJS();
+        const items = store.getItems();
         const itemTypes = store.getItemTypes().toJS();
         const gains = store.getGains().toJS();
         const gainTypes = store.getGainTypes().toJS();

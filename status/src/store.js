@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import {itemsCursor, gainsCursor} from './state';
+import {itemsCursor, gainsCursor, filtersCursor} from './state';
 import dispatcher from './lib/dispatcher';
 import {List, Record} from 'immutable';
 import $ from 'jquery-browserify';
@@ -23,19 +23,22 @@ const ItemRecord = new Record({
     }
 });
 
+const TimeRecord = new Record({
+    day: 0,
+    month: 0,
+    year: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
+});
+
 const GainRecord = new Record({
     name: '',
     gainType: new Type(),
     amount: 0,
-    time: {
-        day: 0,
-        month: 0,
-        year: 0,
-        hour: 0,
-        minute: 0,
-        second: 0,
-    }
+    time: new TimeRecord(),
 });
+
 
 export const dispatchToken = dispatcher.register(({action, data}) => {
     switch(action) {
@@ -78,6 +81,18 @@ export const dispatchToken = dispatcher.register(({action, data}) => {
 
             setToGainsCursor('gainTypes', gainTypes);
             break;
+
+        case actions.setSelectedTimeFrom:
+            setToFiltersCursor('selectedTimeFrom', new TimeRecord(data).toMap());
+            break;
+
+        case actions.setSelectedTimeTo:
+            setToFiltersCursor('selectedTimeTo', new TimeRecord(data).toMap());
+            break;
+
+        case actions.setSelectedItemTypeId:
+            setToFiltersCursor('selectedItemTypeId', data);
+            break;
     }
 });
 
@@ -87,6 +102,10 @@ function setToItemsCursor(key, value) {
 
 function setToGainsCursor(key, value) {
     gainsCursor((gains) => gains.set(key, value));
+}
+
+function setToFiltersCursor(key, value) {
+    filtersCursor((filters) => filters.set(key, value));
 }
 
 export function getItems() {
@@ -103,4 +122,15 @@ export function getGains() {
 
 export function getGainTypes() {
     return gainsCursor().get('gainTypes');
+}
+
+export function getSelectedDate() {
+    return {
+        timeFrom: filtersCursor().get('selectedTimeFrom').toJS(),
+        timeTo: filtersCursor().get('selectedTimeTo').toJS(),
+    };
+}
+
+export function getSelectedItemTypeId() {
+    return filtersCursor().get('selectedItemTypeId');
 }

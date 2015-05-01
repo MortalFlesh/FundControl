@@ -2,11 +2,7 @@ import React from 'react';
 
 var ItemsList = React.createClass({
     render() {
-        var items = this.props.data.map(function (item) {
-            return (
-                <Item item={item} />
-            );
-        });
+        const items = this.props.items.map((item) => <Item item={item} />);
 
         return (
             <div className="itemsList">

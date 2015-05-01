@@ -35,3 +35,15 @@ export function set(key, value) {
             break;
     }
 }
+
+export function setSelectedTimeFrom(time:object) {
+    dispatcher.dispatch(setSelectedTimeFrom, time);
+}
+
+export function setSelectedTimeTo(time:object) {
+    dispatcher.dispatch(setSelectedTimeTo, time);
+}
+
+export function setSelectedItemTypeId(typeId:number) {
+    dispatcher.dispatch(setSelectedItemTypeId, typeId);
+}
