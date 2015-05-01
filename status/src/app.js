@@ -21,7 +21,7 @@ const App = React.createClass({
     render() {
         const items = store.getItems();
         const itemTypes = store.getItemTypes().toJS();
-        const gains = store.getGains().toJS();
+        const gains = store.getGains();
         const gainTypes = store.getGainTypes().toJS();
 
         const status = {

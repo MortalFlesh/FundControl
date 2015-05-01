@@ -7,14 +7,12 @@ import ItemsBox from './ItemsBox';
 
 var StatusPage = React.createClass({
     getAmount(item) {
-        return parseFloat(item.amount);
+        return parseFloat(item.get('amount'));
     },
-    total(values) {
-        const total = values
+    total(items) {
+        return items
             .map((item) => this.getAmount(item))
-            .reduce((previous, current) => previous + current, 0);
-
-        return total || 0;
+            .reduce((previous, current) => previous + current, 0) || 0;
     },
     render() {
         const moneyFlow = {

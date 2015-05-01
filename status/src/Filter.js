@@ -16,7 +16,7 @@ const Filter = React.createClass({
                 <label>
                     {this.props.title + ':' + Style.nbsp}
                     <select onChange={this.props.filterOnChange} defaultValue={this.props.selectedValue}>
-                        <option value=''>{'-- all --'}</option>
+                        <option value={0}>{'-- all --'}</option>
                         {options}
                     </select>
                 </label>
